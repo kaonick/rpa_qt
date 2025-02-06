@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    async function fetch_data(){
+        const response = await fetch('http://localhost:9401/streaming');
+        if (!response.ok)
+            throw new Error(await response.text());
+        for await (const chunk of response.body.values()) {
+            console.log('got', chunk);
+        }
+    }
+    fetch_data();
+
+</script>
+</body>
+</html>

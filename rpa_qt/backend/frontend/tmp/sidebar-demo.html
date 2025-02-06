@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Demo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #sidebar-wrapper {
+            min-height: 100vh;
+            width: 280px;
+            margin-left: -280px;
+            transition: margin 0.25s ease-out;
+        }
+
+        #sidebar-wrapper.show {
+            margin-left: 0;
+        }
+
+        #page-content-wrapper {
+            min-width: 100vw;
+        }
+
+        .list-group-item {
+            cursor: pointer;
+        }
+
+        .content-preview {
+            display: none;
+            padding: 10px;
+            background-color: #f8f9fa;
+            margin-top: 5px;
+            border-radius: 4px;
+        }
+
+        @media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #sidebar-wrapper.hide {
+                margin-left: -280px;
+            }
+
+            #page-content-wrapper {
+                min-width: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading p-3">Sidebar Menu</div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center" onclick="toggleContent(this)">
+                        <span>Item 1</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="content-preview">
+                        This is the content for Item 1. It contains some useful information.
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center" onclick="toggleContent(this)">
+                        <span>Item 2</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="content-preview">
+                        Content for Item 2. Here you can find more details about this topic.
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center" onclick="toggleContent(this)">
+                        <span>Item 3</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                    <div class="content-preview">
+                        Item 3 content explains additional features and functionality.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                </div>
+            </nav>
+
+            <div class="container-fluid p-4">
+                <h1>Welcome to the Demo</h1>
+                <p>Click the toggle button to show/hide the sidebar. Click on sidebar items to expand/collapse their content.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar
+        document.getElementById("menu-toggle").addEventListener("click", function(e) {
+            e.preventDefault();
+            const wrapper = document.getElementById("sidebar-wrapper");
+            if (window.innerWidth >= 768) {
+                wrapper.classList.toggle("hide");
+            } else {
+                wrapper.classList.toggle("show");
+            }
+        });
+
+        // Toggle content preview
+        function toggleContent(element) {
+            const content = element.nextElementSibling;
+            const isVisible = content.style.display === "block";
+            content.style.display = isVisible ? "none" : "block";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Search Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 10px;
+        }
+
+        .supplier-list {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 3px 0;
+        }
+
+        .supplier-item {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 1px;
+            border: 1px solid black;
+            cursor: pointer;
+            vertical-align: top;
+            transition: box-shadow 0.3s;
+        }
+
+        .supplier-item:hover {
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .supplier-item.selected {
+            border: 3px solid red;
+        }
+        .supplier-item.finished {
+            border: 3px solid green;
+        }
+
+        .supplier-logo {
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .supplier-name {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 5px;
+        }
+
+        .result-supplier-container {
+            white-space: nowrap;
+            padding: 10px 0;
+        }
+
+        .result-supplier-card {
+            width: 100%;
+            height: 100%;
+            margin: 3px;
+            border: 1px solid black;
+            cursor: pointer;
+            vertical-align: middle;
+            transition: box-shadow 0.3s;
+        }
+
+        .result-supplier-card:hover {
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+
+
+        .product-list-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+        }
+
+        .product-card {
+            display: inline-block;
+            width: calc(100%/4);
+            height: calc((16.666% - 20px) * 3);
+            margin: 3px;
+            border: 1px solid black;
+            cursor: pointer;
+            vertical-align: top;
+            transition: box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .product-image {
+            aspect-ratio: 1/1;
+            object-fit: contain;
+            width: 90%;
+        }
+
+        .product-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 5px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            color: red;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        .search-container input {
+            width: 90%;
+            padding-right: 40px;
+        }
+
+        .search-container button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 10%;
+            height: 100%;
+        }
+
+        <!-- stop watch-->
+        .stopwatch {
+            text-align: center;
+        }
+        .time {
+            width:100%;
+            display: flex;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Row 1: Title -->
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Price Search Page</h1>
+            </div>
+        </div>
+
+        <!-- Row 2: Search Bar -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="search-container">
+                    <input type="text" class="form-control" placeholder="search by product name" id="searchInput">
+                    <button class="btn btn-primary" id="searchButton">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                  <div class="stopwatch">
+                    <div class="time" id="time">00:00:000</div>
+                  </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Supplier List -->
+        <div class="row">
+            <div class="col-12">
+                <div class="supplier-list" id="supplierList">
+                    <!-- Supplier items will be added here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 4-10: Search Results -->
+        <div id="searchResults">
+            <!-- Search result rows will be added here -->
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var base_url = window.location.origin;
+        console.log(base_url);
+
+
+
+        // Sample data
+        let suppliers = [
+        ];
+        let search_case={};
+        let search_sources=[];
+        let search_results=[];
+
+
+
+        let products = {};
+        // Fetch suppliers*************************************************************************
+        function getSuppliers() {
+            return fetch(base_url+'/get_suppliers')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        return data.data;
+                    }else{
+                        return [];
+                    }
+                });
+        }
+
+        async function fetchData_suppliers() {
+          try {
+            const data = await getSuppliers();
+            suppliers = data;
+            console.log(suppliers);
+            initializeSuppliers()
+          } catch (error) {
+            console.error('Error:', error);
+            suppliers = [];
+          }
+        }
+        fetchData_suppliers();
+
+        // Fetch case*************************************************************************
+        function summit_question(question) {
+            //return fetch(base_url+'/celery_search?q='+question)
+            return fetch(base_url+'/search?q='+question)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        return data;
+                    }else{
+                        return {};
+                    }
+                });
+        }
+
+
+        async function fetchData_summit_question(question) {
+          try {
+            const data = await summit_question(question);
+            search_case = data;
+            console.log(search_case);
+
+            fetchData_search_result(search_case.case_id);
+          } catch (error) {
+            console.error('Error:', error);
+            search_case = {};
+          }
+        }
+
+        // Fetch search sources,search results*************************************************************************
+        async function get_search_results(case_id) {
+            const response = await fetch(base_url+'/after_search?case_id='+case_id);
+            if (!response.ok)
+                throw new Error(await response.text());
+            for await (const chunk of response.body.values()) {
+                //console.log('got', chunk);
+                const jsonString = new TextDecoder().decode(chunk);
+                //console.log("out:");
+                //console.log(jsonString);
+                let data = JSON.parse(jsonString);
+                //console.log(data);
+
+                // get data k,v
+                let k=Object.keys(data)[0]
+                let v=Object.values(data)[0]
+
+                if (k=="END"){
+                    //is finished
+                    console.log("finished");
+                    stopTimer();
+                    break;
+                }
+                // if len of v >0 then parse every v to json
+                if (v.length>0){
+                    for (let i = 0; i < v.length; i++) {
+                        v[i]=JSON.parse(v[i])
+                    }
+                }
+                products[k]=v
+                //console.log(products);
+                console.log(`streaming got case_id: ${case_id} , site_id: ${k}`);
+
+
+                const supplierItem = document.querySelector(`.supplier-item[data-site_id="${k}"]`);
+                toggleSupplier_finish(supplierItem);
+            }
+
+        }
+
+
+        async function fetchData_search_result(case_id) {
+          try {
+            console.log(`streaming case_id: ${case_id}`);
+            await get_search_results(case_id);
+
+            // select all finish site_id
+            console.log(`products: ${products}`);
+            //for (var key in products) {
+            //    console.log(`${key}`);
+            //    const supplierItem = document.querySelector(`.supplier-item[data-site_id="${key}"]`);
+            //    toggleSupplier_finish(supplierItem);
+            //}
+
+          } catch (error) {
+            console.error('Error:', error);
+            search_results = [];
+          }
+        }
+
+        // Initialize supplier list
+        function initializeSuppliers() {
+            console.log('initializeSuppliers begin...');
+            const supplierList = document.getElementById('supplierList');
+            suppliers.forEach(supplier => {
+                const supplierItem = document.createElement('div');
+                supplierItem.className = 'supplier-item';
+                supplierItem.dataset.site_id = supplier.site_id;
+                img_src = base_url+"/downloadfile?file_name="+supplier.site_logo+"&task_id=supplier_logo";
+                supplierItem.innerHTML = `
+                    <div class="supplier-logo">
+                        <img src="/downloadfile?file_name=${supplier.site_logo}.png&task_id=supplier_logo" alt="${supplier.site_name}" title="${supplier.site_name}" width="100%" height="100%">
+                    </div>
+                `;
+                supplierItem.addEventListener('click', () => toggleSupplier(supplierItem));
+                supplierList.appendChild(supplierItem);
+            });
+        }
+
+        // Toggle supplier selection
+        function toggleSupplier(supplierItem) {
+            supplierItem.classList.toggle('selected');
+            updateResults();
+        }
+
+        // Toggle supplier selection
+        function toggleSupplier_finish(supplierItem) {
+            supplierItem.classList.toggle('selected');
+            updateResults();
+        }
+
+        // Update search results
+        function updateResults() {
+            const searchResults = document.getElementById('searchResults');
+            searchResults.innerHTML = '';
+
+            const selectedSuppliers = Array.from(document.querySelectorAll('.supplier-item.selected'))
+                .map(item => item.dataset.site_id);
+
+            selectedSuppliers.forEach(site_id => {
+                if (products[site_id]) {
+                    const supplier = suppliers.find(s => s.site_id === site_id);
+                    const row = document.createElement('div');
+                    row.className = 'row mb-3';
+                    row.innerHTML = `
+                        <div class="col-2">
+                            <div class="result-supplier-container">
+                                <div class="result-supplier-card">
+                                    <a href="#" target="_blank">
+                                        <img src="/downloadfile?file_name=${supplier.site_logo}.png&task_id=supplier_logo" alt="${supplier.site_name}" title="${supplier.site_name}" width="100%" height="80%">
+                                        <div class="supplier-name" title="${supplier.site_name}">${supplier.site_name}</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="product-list-container">
+                                ${products[site_id].map(product => `
+                                    <div class="product-card" onclick="window.open('${product.item_href}', '_blank')">
+                                        <div class="product-image">
+                                            <img src="${product.item_image_href}" alt="${product.title}" width="100%" height="100%">
+                                        </div>
+                                        <div class="product-title" title="${product.title}">${product.title}</div>
+                                        <div class="product-price">${product.price}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    searchResults.appendChild(row);
+                }
+            });
+        }
+
+        function clearResults() {
+            const supplierList = document.getElementById('supplierList');
+            supplierList.innerHTML = '';
+            initializeSuppliers();
+            products = {};
+            const searchResults = document.getElementById('searchResults');
+            searchResults.innerHTML = '';
+        }
+
+        // Search functionality
+        function handleSearch() {
+            // Implement search logic here
+            clearResults();
+            startTimer();
+            console.log('Search triggered:', document.getElementById('searchInput').value);
+            let question=document.getElementById('searchInput').value;
+            fetchData_summit_question(question);
+        }
+
+        // Event listeners
+        document.getElementById('searchButton').addEventListener('click', handleSearch);
+        document.getElementById('searchInput').addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        });
+
+        //stop watch*********************************************************************************************
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval;
+        const timeDisplay = document.getElementById('time');
+        function formatTime(ms) {
+          const minutes = Math.floor(ms / 60000);
+          const seconds = Math.floor((ms % 60000) / 1000);
+          const milliseconds = ms % 1000;
+          return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(3, '0')}`;
+        }
+
+        function startTimer() {
+            startTime = 0;
+            elapsedTime = 0;
+            startTime = Date.now() - elapsedTime;
+            timerInterval = setInterval(() => {
+                elapsedTime = Date.now() - startTime;
+                timeDisplay.textContent = formatTime(elapsedTime);
+            }, 10);
+        }
+
+        function stopTimer() {
+          clearInterval(timerInterval);
+        }
+        //end stop watch*********************************************************************************************
+
+        // Initialize the page
+        initializeSuppliers();
+
+
+
+    </script>
+</body>
+</html>

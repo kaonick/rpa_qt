@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF8">
+    <title>Title</title>
+    <script src="https://unpkg.com/js-image-zoom@0.7.0/js-image-zoom.js" type="application/javascript"></script>
+</head>
+<body>
+
+<div id="navbar">
+<button type="button" onclick="zoomin()"> Zoom In+</button>
+<button type="button" onclick="zoomout()"> Zoom Out-</button>
+</div>
+<div class="main">
+<img id="map" src="http://www.worldatlas.com/webimage/countrys/europelargesm.jpg" />
+</div>
+<script>
+    var _path = getUrlParam('path');
+    console.log(_path);
+    setImgPath();
+
+    function getUrlParam(name) {
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        console.log(urlParams);
+        const path = urlParams.get('path')
+        return path
+    }
+    function setImgPath(){
+        var img = document.getElementById("map");
+        if (_path == null){
+            img.src = "http://www.worldatlas.com/webimage/countrys/europelargesm.jpg";
+        }else{
+            img.src = _path;
+        }
+    }
+    function zoomin(){
+        var myImg = document.getElementById("map");
+        var currWidth = myImg.clientWidth;
+        //if(currWidth == 2500) return false;
+        // else{
+        //    myImg.style.width = (currWidth + 100) + "px";
+        //}
+        myImg.style.width = (currWidth + 100) + "px";
+    }
+    function zoomout(){
+        var myImg = document.getElementById("map");
+        var currWidth = myImg.clientWidth;
+        if(currWidth == 100) return false;
+		 else{
+            myImg.style.width = (currWidth - 100) + "px";
+        }
+    }
+</script>
+<style>
+    *body {
+      margin: 0;
+    }
+    #navbar {
+        overflow: hidden;
+        background-color: #099;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 20px;
+    }
+    #navbar a {
+      float: left;
+      display: block;
+      color: #666;
+      text-align: center;
+      padding-right: 20px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    #navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    #navbar a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .main {
+      padding: 16px;
+      margin-top: 30px;
+    }
+    .main img {
+        /* max-width: 100%; */
+        height: auto;
+    }
+    .button {
+      width: 300px;
+      height: 60px;
+    }
+</style>
+</body>
+</html>
