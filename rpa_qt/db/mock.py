@@ -57,8 +57,14 @@ def mock_browser_read():
         print(file_name)
 
 
+def mock_chart_of_accounting():
+    file_path = "C:/Users/Nick/Downloads/簡易會計科目表.xlsx"
+    df = load_xls(file_path,sheet_name="工作表1")
+    print(df.head())
+
 if __name__ == '__main__':
-    mock_insert_browsers()
+    # mock_insert_browsers()
     # mock_supplier_logo_crawler()
     # mock_browser_read()
+    mock_chart_of_accounting()
 

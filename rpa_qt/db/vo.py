@@ -4,6 +4,27 @@ from typing import Optional, ClassVar
 from rpa_qt.utils.config_yaml_loader import settings
 from pydantic.fields import PrivateAttr
 
+# 會計科目表：科目代號、科目名稱、科目央文名稱、科目類別、科目層級、上層科目、科目排序、科目狀態、科目備註
+# 科目代號	科目名稱	科目中文名稱	科目類別	科目層級	上層科目	科目排序	科目狀態	科目備註
+class AccountSubject(SQLModel, table=True):
+    __table_args__ = (
+        PrimaryKeyConstraint('id'),
+        UniqueConstraint("subject_code", name="unique_constraint_subject_code"),
+    )
+    id: Optional[int] = Field(default=None, primary_key=True)
+    subject_code: str = Field(default=None, nullable=False)  # 科目代號
+    subject_name: str = Field(default=None, nullable=False)  # 科目名稱
+    subject_name_cn: str = Field(default=None, nullable=True)  # 科目名稱(中文)
+    subject_type: str = Field(default=None, nullable=True)  # 科目類別
+    subject_level: int = Field(default=1, nullable=True)  # 科目層級
+    parent_subject: str = Field(default=None, nullable=True)  # 上層科目
+    subject_sort: int = Field(default=None, nullable=True)  # 科目排序
+    subject_status: str = Field(default=None, nullable=True)  # 科目狀態
+    subject_remark: str = Field(default=None, nullable=True)  # 科目備註
+
+    def __str__(self):
+        return f"AccountSubject: {self.subject_code}-{self.subject_name}"
+
 """
 要爬的網站定義：
 """
