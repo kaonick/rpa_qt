@@ -200,10 +200,12 @@ def plot_equity(equity_df: pd.DataFrame, ticker: str):
     plt.close()
 
 
+
+
 # ---------- 範例使用 ----------
 if __name__ == '__main__':
     # 修改下面 ticker, start, end 做回測
-    ticker = 'TSLA' #'SPY'            # 或 'AAPL', 'TSLA' 等
+    ticker = '1216.TW' #'0050.TW' #'SPY'            # 或 'AAPL', 'TSLA' 等
     start = '2015-01-01'
     end   = '2024-12-31'
     print('Fetching data...')
