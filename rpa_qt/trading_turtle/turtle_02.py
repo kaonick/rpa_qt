@@ -63,7 +63,7 @@ Disclaimer
 This code is for educational purposes. Live trading involves significant risk. Use at your own risk.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import math
 import sys
@@ -164,7 +164,7 @@ class StrategyConfig:
     # Systems toggle
     use_system1: bool = True
     use_system2: bool = True
-    skip_20d_after_win: bool = True  # classic turtle rule
+    skip_20d_after_win: bool = True  # classic trading_turtle rule
 
     # Trading constraints
     leverage: float = 1.0       # notional cap = equity * leverage

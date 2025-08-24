@@ -46,6 +46,7 @@ dependencies = [
     # data
     "yfinance>=0.2.65",
     "ccxt>=4.5.0", # CryptoCurrency eXchange Trading Library
+    "dash>=3.2.0",
 ]
 
 [tool.hatch.build.targets.sdist]
