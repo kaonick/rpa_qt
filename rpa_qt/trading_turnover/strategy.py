@@ -6,23 +6,182 @@ import pandas as pd
 from rpa_qt.price_utils.coin_price_ws import KlineWebSocket
 
 
+# def analyze_trading_signal(current_price: float, ema20: float, ema60: float, ema120: float,
+#                             volume: bool, avg_volume: bool) -> tuple[str, str]:
+#     """
+#
+#     """
+#     is_volume_high=False
+#     is_volume_low=False
+#     if avg_volume*1.2 < volume:
+#         is_volume_high = True
+#
+#     if avg_volume*0.8 > volume:
+#         is_volume_low = True
+#
+#
+#     # 初始化預設值 (Initialize default values)
+#     signal_description = "無明確訊號" # No clear signal
+#     action_advice = "觀望" # Observe
+#
+#     # 定義「靠近」均線的價格閾值 (Define price threshold for "near" EMA, e.g., within 1%)
+#     price_near_ema_threshold = 0.01
+#
+#     # 定義均線「糾結」的閾值 (Define EMA "consolidation" threshold, e.g., EMAs within 0.5% of each other)
+#     ema_closeness_threshold = 0.005
+#
+#     # --- 策略判斷 (Strategy Prioritization) ---
+#     # 按照策略的特異性/強度從高到低進行判斷，以避免重複或較弱的訊號覆蓋較強的訊號。
+#     # (Prioritize strategies from most specific/strongest to more general to prevent weaker signals from overriding stronger ones.)
+#
+#     # 1. 強勢多頭排列 (Strong Bullish Alignment)
+#     # 條件: 價格高於所有EMA, 且 EMA20 > EMA60 > EMA120, 伴隨大量
+#     if current_price > ema20 and ema20 > ema60 and ema60 > ema120 and is_volume_high:
+#         signal_description = "市場處於強勁上升趨勢，短期、中期、長期均線皆呈多頭排列，並有大量能助推。"
+#         action_advice = "買入 (大倉位)"
+#         return action_advice, signal_description
+#
+#     # 2. 強勢空頭排列 (Strong Bearish Alignment)
+#     # 條件: 價格低於所有EMA, 且 EMA20 < EMA60 < EMA120, 伴隨大量
+#     if current_price < ema20 and ema20 < ema60 and ema60 < ema120 and is_volume_high:
+#         signal_description = "市場處於強勁下跌趨勢，短期、中期、長期均線皆呈空頭排列，並有大量能加速下跌。"
+#         action_advice = "賣出 (大倉位)"
+#         return action_advice, signal_description
+#
+#     # 3. 短線黃金交叉 (Short-term Golden Cross)
+#     # 條件: EMA20在EMA60上方，且現價在EMA60上方 (暗示多頭趨勢，並假設剛發生或已維持黃金交叉), 伴隨放量
+#     # Note: 判斷精確的「交叉」需要前一時間點數據，此處是判斷交叉後的「狀態」。
+#     # (Precise "cross" detection requires previous data. Here we detect the *state* after a cross.)
+#     if ema20 > ema60 and current_price > ema60 and is_volume_high:
+#         signal_description = "短期多頭動能增強，EMA20向上穿越EMA60（或已在上方），代表短期趨勢轉強。"
+#         action_advice = "買入 (中倉位)"
+#         return action_advice, signal_description
+#
+#     # 4. 短線死亡交叉 (Short-term Death Cross)
+#     # 條件: EMA20在EMA60下方，且現價在EMA60下方 (暗示空頭趨勢), 伴隨放量
+#     if ema20 < ema60 and current_price < ema60 and is_volume_high:
+#         signal_description = "短期空頭動能增強，EMA20向下穿越EMA60（或已在下方），代表短期趨勢轉弱。"
+#         action_advice = "賣出 (中倉位)"
+#         return action_advice, signal_description
+#
+#     # 5. 中長期黃金交叉 (Mid-to-Long-term Golden Cross)
+#     # 條件: EMA20在EMA120上方，且現價在EMA120上方, 伴隨放量
+#     if ema20 > ema120 and current_price > ema120 and is_volume_high:
+#         signal_description = "中長期趨勢轉強信號，EMA20向上穿越EMA120（或已在上方），可能預示著較大的上升空間。"
+#         action_advice = "買入 & 加碼"
+#         return action_advice, signal_description
+#
+#     # 6. 中長期死亡交叉 (Mid-to-Long-term Death Cross)
+#     # 條件: EMA20在EMA120下方，且現價在EMA120下方, 伴隨放量
+#     if ema20 < ema120 and current_price < ema120 and is_volume_high:
+#         signal_description = "中長期趨勢轉弱信號，EMA20向下穿越EMA120（或已在下方），可能預示著較大的下跌空間。"
+#         action_advice = "賣出 & 減碼"
+#         return action_advice, signal_description
+#
+#     # 7. 價格回踩EMA支撐 (Price Retracement to EMA Support)
+#     # 條件: 均線呈多頭排列, 價格在長期支撐上方, 且靠近短期或中期EMA, 伴隨縮量
+#     if (ema20 > ema60 and ema60 > ema120 and # 均線多頭排列，暗示上升趨勢 (Bullish EMA order implies uptrend)
+#         current_price > ema120 and # 價格在長期支撐上方 (Price above long-term support)
+#         (abs(current_price - ema20) / ema20 < price_near_ema_threshold or
+#          abs(current_price - ema60) / ema60 < price_near_ema_threshold) and # 價格靠近EMA20或EMA60 (Price near EMA20 or EMA60)
+#         is_volume_low): # 回踩時縮量 (Retracement with low volume)
+#         signal_description = "價格在上升趨勢中回落至均線附近，獲得支撐後反彈，縮量回踩表明拋壓減輕。"
+#         action_advice = "買入 (觀察反彈K線)"
+#         return action_advice, signal_description
+#
+#     # 8. 價格觸及EMA壓力 (Price Touching EMA Resistance)
+#     # 條件: 均線呈空頭排列, 價格在長期壓力下方, 且靠近短期或中期EMA, 伴隨縮量
+#     if (ema20 < ema60 and ema60 < ema120 and # 均線空頭排列，暗示下降趨勢 (Bearish EMA order implies downtrend)
+#         current_price < ema120 and # 價格在長期壓力下方 (Price below long-term resistance)
+#         (abs(current_price - ema20) / ema20 < price_near_ema_threshold or
+#          abs(current_price - ema60) / ema60 < price_near_ema_threshold) and # 價格靠近EMA20或EMA60 (Price near EMA20 or EMA60)
+#         is_volume_low): # 觸及時縮量 (Touching resistance with low volume)
+#         signal_description = "價格在下降趨勢中反彈至均線附近，遭遇壓力後回落，縮量反彈表明買盤不足。"
+#         action_advice = "賣出 (觀察受阻K線)"
+#         return action_advice, signal_description
+#
+#     # 9. 均線糾結盤整 (EMA Consolidation / Range-bound)
+#     # 條件: 短中長期EMA之間距離接近 (糾結), 且非高量
+#     is_consolidated = (abs(ema20 - ema60) / ema60 < ema_closeness_threshold and
+#                        abs(ema60 - ema120) / ema120 < ema_closeness_threshold)
+#     if is_consolidated and not is_volume_high: # 均線糾結且非高量 (EMAs tangled and not high volume)
+#         signal_description = "均線相互纏繞，市場趨勢不明顯，多空力量均衡，容易出現假突破。"
+#         action_advice = "觀望 / 區間操作"
+#         return action_advice, signal_description
+#
+#     # 10. 盤整區間突破 (Breakout from Consolidation)
+#     # 條件: 不處於糾結狀態, 且伴隨大量 (暗示突破), 並形成明確的多空排列傾向
+#     if not is_consolidated and is_volume_high: # 不糾結且大量 (Not consolidating and high volume)
+#         if current_price > ema120 and ema20 > ema60: # 向上突破的偏向 (Upward breakout bias)
+#             signal_description = "價格突破長期整理區間，均線開始向上發散，並伴隨大量能確認方向。"
+#             action_advice = "買入 (向上突破)"
+#             return action_advice, signal_description
+#         elif current_price < ema120 and ema20 < ema60: # 向下突破的偏向 (Downward breakout bias)
+#             signal_description = "價格突破長期整理區間，均線開始向下發散，並伴隨大量能確認方向。"
+#             action_advice = "賣出 (向下突破)"
+#             return action_advice, signal_description
+#
+#     return action_advice, signal_description
+
+
+SIGNAL_BOOKS=[
+    {"status":"0. 無明確訊號","description":"無明確訊號。","action_advice":"觀望","position":0},
+    {"status":"1. 強勢多頭排列","description":"市場處於強勁上升趨勢，短期、中期、長期均線皆呈多頭排列，並有大量能助推。","action_advice":"買入(大倉位)","position":3},
+    {"status":"2. 強勢空頭排列","description":"市場處於強勁下跌趨勢，短期、中期、長期均線皆呈空頭排列，並有大量能加速下跌。","action_advice":"賣出(大倉位)","position":3},
+    {"status":"3. 短線黃金交叉","description":"短期多頭動能增強，EMA20向上穿越EMA60（或已在上方），代表短期趨勢轉強。","action_advice":"買入(中倉位)","position":2},
+    {"status":"4. 短線死亡交叉","description":"短期空頭動能增強，EMA20向下穿越EMA60（或已在下方），代表短期趨勢轉弱。","action_advice":"賣出(中倉位)","position":2},
+    {"status":"5. 中長期黃金交叉","description":"中長期趨勢轉強信號，EMA20向上穿越EMA120（或已在上方），可能預示著較大的上升空間。","action_advice":"買入 & 加碼","position":1},
+    {"status":"6. 中長期死亡交叉","description":"中長期趨勢轉弱信號，EMA20向下穿越EMA120（或已在下方），可能預示著較大的下跌空間。","action_advice":"賣出 & 減碼","position":1},
+    {"status":"7. 價格回踩EMA支撐","description":"價格在上升趨勢中回落至均線附近，獲得支撐後反彈，縮量回踩表明拋壓減輕。","action_advice":"買入(觀察反彈K線)","position":1},
+    {"status":"8. 價格觸及EMA壓力","description":"價格在下降趨勢中反彈至均線附近，遭遇壓力後回落，縮量反彈表明買盤不足。","action_advice":"賣出(觀察受阻K線)","position":1},
+    {"status":"9. 均線糾結盤整","description":"均線相互纏繞，市場趨勢不明顯，多空力量均衡，容易出現假突破。","action_advice":"觀望/ 區間操作","position":0},
+    {"status":"10.1. 盤整區間突破","description":"價格突破長期整理區間，均線開始向上發散，並伴隨大量能確認方向。","action_advice":"買入(向上突破)","position":3},
+    {"status":"10.2. 盤整區間突破","description":"價格突破長期整理區間，均線開始向下發散，並伴隨大量能確認方向。","action_advice":"賣出(向下突破)","position":3},
+]
+
+
 def analyze_trading_signal(current_price: float, ema20: float, ema60: float, ema120: float,
-                            volume: bool, avg_volume: bool) -> tuple[str, str]:
+                            volume: float, avg_volume: float,
+                            prev_ema20: float, prev_ema60: float, prev_ema120: float) -> dict:
+    """
+    根據當前及前一筆K線的現價、EMA值和交易量分析交易訊號，並提供行動建議。
+    特別強化了對均線「交叉」和「趨勢變化」的判斷。
+
+    參數 (Parameters):
+    :param current_price: 當前價格 (Current price)
+    :param ema20: 當前20週期指數移動平均線 (Current 20-period Exponential Moving Average)
+    :param ema60: 當前60週期指數移動平均線 (Current 60-period Exponential Moving Average)
+    :param ema120: 當前120週期指數移動平均線 (Current 120-period Exponential Moving Average)
+    :param volume: 當前交易量 (Current trading volume)
+    :param avg_volume: 平均交易量 (Average trading volume)
+    :param prev_ema20: 前一筆K線的20週期指數移動平均線 (Previous 20-period EMA)
+    :param prev_ema60: 前一筆K線的60週期指數移動平均線 (Previous 60-period EMA)
+    :param prev_ema120: 前一筆K線的120週期指數移動平均線 (Previous 120-period EMA)
+
+    回傳 (Returns):
+    :return: 包含行動建議和訊號說明的元組 (Tuple containing action advice and signal description)
+
+    備註 (Notes):
+    - 「放量/縮量」根據當前交易量與平均交易量的比較自動判斷。
+      (Volume status ("high/low") is automatically determined by comparing current volume with average volume.)
+    - 均線「交叉」的判斷現在會比對前後兩筆數據，更為精確。
+      (EMA "cross" detection now compares current and previous data for increased precision.)
+    - 均線「上升/下降」的判斷也透過比對前後數據來增強。
+      (EMA "rising/falling" trends are also enhanced by comparing current and previous data.)
     """
 
-    """
-    is_volume_high=False
-    is_volume_low=False
-    if avg_volume*1.2 < volume:
+    # 判斷交易量狀態 (Determine volume status)
+    is_volume_high = False
+    is_volume_low = False
+    if avg_volume * 1.2 < volume: # 如果當前交易量顯著高於平均 (If current volume is significantly higher than average)
         is_volume_high = True
-
-    if avg_volume*0.8 > volume:
+    elif avg_volume * 0.8 > volume: # 如果當前交易量顯著低於平均 (If current volume is significantly lower than average)
         is_volume_low = True
 
-
     # 初始化預設值 (Initialize default values)
-    signal_description = "無明確訊號" # No clear signal
-    action_advice = "觀望" # Observe
+    signal=SIGNAL_BOOKS[0]
+    # signal_description = "無明確訊號" # No clear signal
+    # action_advice = "觀望" # Observe
 
     # 定義「靠近」均線的價格閾值 (Define price threshold for "near" EMA, e.g., within 1%)
     price_near_ema_threshold = 0.01
@@ -30,100 +189,148 @@ def analyze_trading_signal(current_price: float, ema20: float, ema60: float, ema
     # 定義均線「糾結」的閾值 (Define EMA "consolidation" threshold, e.g., EMAs within 0.5% of each other)
     ema_closeness_threshold = 0.005
 
+    # 計算當前均線是否上升/下降 (Calculate if current EMAs are rising/falling)
+    ema20_rising = ema20 > prev_ema20
+    ema60_rising = ema60 > prev_ema60
+    ema120_rising = ema120 > prev_ema120
+    ema20_falling = ema20 < prev_ema20
+    ema60_falling = ema60 < prev_ema60
+    ema120_falling = ema120 < prev_ema120
+
+
     # --- 策略判斷 (Strategy Prioritization) ---
-    # 按照策略的特異性/強度從高到低進行判斷，以避免重複或較弱的訊號覆蓋較強的訊號。
-    # (Prioritize strategies from most specific/strongest to more general to prevent weaker signals from overriding stronger ones.)
+    # 按照策略的特異性/強度從高到低進行判斷。
+    # (Prioritize strategies from most specific/strongest to more general.)
 
     # 1. 強勢多頭排列 (Strong Bullish Alignment)
-    # 條件: 價格高於所有EMA, 且 EMA20 > EMA60 > EMA120, 伴隨大量
-    if current_price > ema20 and ema20 > ema60 and ema60 > ema120 and is_volume_high:
-        signal_description = "市場處於強勁上升趨勢，短期、中期、長期均線皆呈多頭排列，並有大量能助推。"
-        action_advice = "買入 (大倉位)"
-        return action_advice, signal_description
+    # 條件: 價格高於所有EMA, 且 EMA20 > EMA60 > EMA120, 均線全部上升, 伴隨大量
+    if (current_price > ema20 and ema20 > ema60 and ema60 > ema120 and
+        ema20_rising and ema60_rising and ema120_rising and
+        is_volume_high):
+        # signal_description = "市場處於強勁上升趨勢，短期、中期、長期均線皆呈多頭排列且向上發散，並有大量能助推。"
+        # action_advice = "買入 (大倉位)"
+        signal=SIGNAL_BOOKS[1]
+        return signal
 
     # 2. 強勢空頭排列 (Strong Bearish Alignment)
-    # 條件: 價格低於所有EMA, 且 EMA20 < EMA60 < EMA120, 伴隨大量
-    if current_price < ema20 and ema20 < ema60 and ema60 < ema120 and is_volume_high:
-        signal_description = "市場處於強勁下跌趨勢，短期、中期、長期均線皆呈空頭排列，並有大量能加速下跌。"
-        action_advice = "賣出 (大倉位)"
-        return action_advice, signal_description
+    # 條件: 價格低於所有EMA, 且 EMA20 < EMA60 < EMA120, 均線全部下降, 伴隨大量
+    if (current_price < ema20 and ema20 < ema60 and ema60 < ema120 and
+        ema20_falling and ema60_falling and ema120_falling and
+        is_volume_high):
+        # signal_description = "市場處於強勁下跌趨勢，短期、中期、長期均線皆呈空頭排列且向下發散，並有大量能加速下跌。"
+        # action_advice = "賣出 (大倉位)"
+        signal=SIGNAL_BOOKS[2]
+        return signal
 
     # 3. 短線黃金交叉 (Short-term Golden Cross)
-    # 條件: EMA20在EMA60上方，且現價在EMA60上方 (暗示多頭趨勢，並假設剛發生或已維持黃金交叉), 伴隨放量
-    # Note: 判斷精確的「交叉」需要前一時間點數據，此處是判斷交叉後的「狀態」。
-    # (Precise "cross" detection requires previous data. Here we detect the *state* after a cross.)
-    if ema20 > ema60 and current_price > ema60 and is_volume_high:
-        signal_description = "短期多頭動能增強，EMA20向上穿越EMA60（或已在上方），代表短期趨勢轉強。"
-        action_advice = "買入 (中倉位)"
-        return action_advice, signal_description
+    # 條件: EMA20從下方穿越EMA60, 且現價在EMA60上方 (確認趨勢), 伴隨放量
+    if (prev_ema20 < prev_ema60 and ema20 > ema60 and # 黃金交叉發生 (Golden cross occurred)
+        current_price > ema60 and # 現價在EMA60之上 (Current price above EMA60)
+        is_volume_high): # 伴隨放量 (With high volume)
+        # signal_description = "短期多頭動能增強，EMA20向上穿越EMA60（黃金交叉），代表短期趨勢轉強。"
+        # action_advice = "買入 (中倉位)"
+        signal=SIGNAL_BOOKS[3]
+        return signal
 
     # 4. 短線死亡交叉 (Short-term Death Cross)
-    # 條件: EMA20在EMA60下方，且現價在EMA60下方 (暗示空頭趨勢), 伴隨放量
-    if ema20 < ema60 and current_price < ema60 and is_volume_high:
-        signal_description = "短期空頭動能增強，EMA20向下穿越EMA60（或已在下方），代表短期趨勢轉弱。"
-        action_advice = "賣出 (中倉位)"
-        return action_advice, signal_description
+    # 條件: EMA20從上方穿越EMA60, 且現價在EMA60下方 (確認趨勢), 伴隨放量
+    if (prev_ema20 > prev_ema60 and ema20 < ema60 and # 死亡交叉發生 (Death cross occurred)
+        current_price < ema60 and # 現價在EMA60之下 (Current price below EMA60)
+        is_volume_high): # 伴隨放量 (With high volume)
+        # signal_description = "短期空頭動能增強，EMA20向下穿越EMA60（死亡交叉），代表短期趨勢轉弱。"
+        # action_advice = "賣出 (中倉位)"
+        signal=SIGNAL_BOOKS[4]
+        return signal
 
     # 5. 中長期黃金交叉 (Mid-to-Long-term Golden Cross)
-    # 條件: EMA20在EMA120上方，且現價在EMA120上方, 伴隨放量
-    if ema20 > ema120 and current_price > ema120 and is_volume_high:
-        signal_description = "中長期趨勢轉強信號，EMA20向上穿越EMA120（或已在上方），可能預示著較大的上升空間。"
-        action_advice = "買入 & 加碼"
-        return action_advice, signal_description
+    # 條件: EMA20從下方穿越EMA120, 且現價在EMA120上方 (確認趨勢), 伴隨放量
+    if (prev_ema20 < prev_ema120 and ema20 > ema120 and # 中長期黃金交叉發生 (Mid-to-long-term golden cross occurred)
+        current_price > ema120 and # 現價在EMA120之上 (Current price above EMA120)
+        is_volume_high): # 伴隨放量 (With high volume)
+        # signal_description = "中長期趨勢轉強信號，EMA20向上穿越EMA120，可能預示著較大的上升空間。"
+        # action_advice = "買入 & 加碼"
+        signal=SIGNAL_BOOKS[5]
+        return signal
 
     # 6. 中長期死亡交叉 (Mid-to-Long-term Death Cross)
-    # 條件: EMA20在EMA120下方，且現價在EMA120下方, 伴隨放量
-    if ema20 < ema120 and current_price < ema120 and is_volume_high:
-        signal_description = "中長期趨勢轉弱信號，EMA20向下穿越EMA120（或已在下方），可能預示著較大的下跌空間。"
-        action_advice = "賣出 & 減碼"
-        return action_advice, signal_description
+    # 條件: EMA20從上方穿越EMA120, 且現價在EMA120下方 (確認趨勢), 伴隨放量
+    if (prev_ema20 > prev_ema120 and ema20 < ema120 and # 中長期死亡交叉發生 (Mid-to-long-term death cross occurred)
+        current_price < ema120 and # 現價在EMA120之下 (Current price below EMA120)
+        is_volume_high): # 伴隨放量 (With high volume)
+        # signal_description = "中長期趨勢轉弱信號，EMA20向下穿越EMA120，可能預示著較大的下跌空間。"
+        # action_advice = "賣出 & 減碼"
+        signal=SIGNAL_BOOKS[2]
+        return signal
 
     # 7. 價格回踩EMA支撐 (Price Retracement to EMA Support)
-    # 條件: 均線呈多頭排列, 價格在長期支撐上方, 且靠近短期或中期EMA, 伴隨縮量
-    if (ema20 > ema60 and ema60 > ema120 and # 均線多頭排列，暗示上升趨勢 (Bullish EMA order implies uptrend)
+    # 條件: 均線呈多頭排列且全部上升, 價格在長期支撐上方, 且靠近短期或中期EMA, 伴隨縮量
+    if (ema20 > ema60 and ema60 > ema120 and # 均線多頭排列 (Bullish EMA order)
+        ema20_rising and ema60_rising and ema120_rising and # 均線全部上升 (All EMAs rising)
         current_price > ema120 and # 價格在長期支撐上方 (Price above long-term support)
         (abs(current_price - ema20) / ema20 < price_near_ema_threshold or
          abs(current_price - ema60) / ema60 < price_near_ema_threshold) and # 價格靠近EMA20或EMA60 (Price near EMA20 or EMA60)
         is_volume_low): # 回踩時縮量 (Retracement with low volume)
-        signal_description = "價格在上升趨勢中回落至均線附近，獲得支撐後反彈，縮量回踩表明拋壓減輕。"
-        action_advice = "買入 (觀察反彈K線)"
-        return action_advice, signal_description
+        # signal_description = "價格在上升趨勢中回落至均線附近獲得支撐，縮量回踩表明拋壓減輕。"
+        # action_advice = "買入 (觀察反彈K線)"
+        # 這裏的觀察反彈K線可以進一步細化為觀察是否出現反轉K線形態，如吞沒、錘頭等，以確認買入時機。
+        # 詳細條列：
+        # - 吞沒形態：當前K線完全包覆前一K線，且方向與趨勢一致，暗示趨勢延續。
+        # - 錘頭/上吊線：下影線較長，顯示下方嘗試未果，可能預示反轉向上。
+        # - 其他反轉形態：如晨星、黃昏星等
+        #   均可作為買入參考。
+        signal=SIGNAL_BOOKS[7]
+        return signal
 
     # 8. 價格觸及EMA壓力 (Price Touching EMA Resistance)
-    # 條件: 均線呈空頭排列, 價格在長期壓力下方, 且靠近短期或中期EMA, 伴隨縮量
-    if (ema20 < ema60 and ema60 < ema120 and # 均線空頭排列，暗示下降趨勢 (Bearish EMA order implies downtrend)
+    # 條件: 均線呈空頭排列且全部下降, 價格在長期壓力下方, 且靠近短期或中期EMA, 伴隨縮量
+    if (ema20 < ema60 and ema60 < ema120 and # 均線空頭排列 (Bearish EMA order)
+        ema20_falling and ema60_falling and ema120_falling and # 均線全部下降 (All EMAs falling)
         current_price < ema120 and # 價格在長期壓力下方 (Price below long-term resistance)
         (abs(current_price - ema20) / ema20 < price_near_ema_threshold or
          abs(current_price - ema60) / ema60 < price_near_ema_threshold) and # 價格靠近EMA20或EMA60 (Price near EMA20 or EMA60)
         is_volume_low): # 觸及時縮量 (Touching resistance with low volume)
-        signal_description = "價格在下降趨勢中反彈至均線附近，遭遇壓力後回落，縮量反彈表明買盤不足。"
-        action_advice = "賣出 (觀察受阻K線)"
-        return action_advice, signal_description
+        # signal_description = "價格在下降趨勢中反彈至均線附近遭遇壓力，縮量反彈表明買盤不足。"
+        # action_advice = "賣出 (觀察受阻K線)"
+        # 這裏的觀察受阻K線可以進一步細化為觀察是否出現反轉K線形態，如吞沒、十字星等，以確認賣出時機。
+        # 詳細條列：
+        # - 吞沒形態：當前K線完全包覆前一K線，且方向與趨勢一致，暗示趨勢延續。
+        # - 十字星形態：開盤與收盤價接近，顯示市場猶豫，可能預示趨勢反轉。
+        # - 錘頭/上吊線：下影線較長，顯示下方嘗試未果，可能預示反轉。
+        # - 其他反轉形態：如晨星、黃昏星等，均可作為賣出參考。
+
+
+        signal=SIGNAL_BOOKS[8]
+        return signal
 
     # 9. 均線糾結盤整 (EMA Consolidation / Range-bound)
     # 條件: 短中長期EMA之間距離接近 (糾結), 且非高量
     is_consolidated = (abs(ema20 - ema60) / ema60 < ema_closeness_threshold and
                        abs(ema60 - ema120) / ema120 < ema_closeness_threshold)
+    # 判斷前一筆是否也糾結，以便判斷是否剛進入盤整
+    is_prev_consolidated = (abs(prev_ema20 - prev_ema60) / prev_ema60 < ema_closeness_threshold and
+                            abs(prev_ema60 - prev_ema120) / prev_ema120 < ema_closeness_threshold)
+
     if is_consolidated and not is_volume_high: # 均線糾結且非高量 (EMAs tangled and not high volume)
-        signal_description = "均線相互纏繞，市場趨勢不明顯，多空力量均衡，容易出現假突破。"
-        action_advice = "觀望 / 區間操作"
-        return action_advice, signal_description
+        # signal_description = "均線相互纏繞，市場趨勢不明顯，多空力量均衡，容易出現假突破。"
+        # action_advice = "觀望 / 區間操作"
+        signal=SIGNAL_BOOKS[9]
+        return signal
 
     # 10. 盤整區間突破 (Breakout from Consolidation)
-    # 條件: 不處於糾結狀態, 且伴隨大量 (暗示突破), 並形成明確的多空排列傾向
-    if not is_consolidated and is_volume_high: # 不糾結且大量 (Not consolidating and high volume)
+    # 條件: 前一筆糾結而當前不再糾結, 且伴隨大量 (暗示突破), 並形成明確的多空排列傾向
+    if is_prev_consolidated and not is_consolidated and is_volume_high:
         if current_price > ema120 and ema20 > ema60: # 向上突破的偏向 (Upward breakout bias)
-            signal_description = "價格突破長期整理區間，均線開始向上發散，並伴隨大量能確認方向。"
-            action_advice = "買入 (向上突破)"
-            return action_advice, signal_description
+            # signal_description = "價格突破長期整理區間，均線開始向上發散，並伴隨大量能確認方向。"
+            # action_advice = "買入 (向上突破)"
+            signal = SIGNAL_BOOKS[10]
+            return signal
         elif current_price < ema120 and ema20 < ema60: # 向下突破的偏向 (Downward breakout bias)
-            signal_description = "價格突破長期整理區間，均線開始向下發散，並伴隨大量能確認方向。"
-            action_advice = "賣出 (向下突破)"
-            return action_advice, signal_description
+            # signal_description = "價格突破長期整理區間，均線開始向下發散，並伴隨大量能確認方向。"
+            # action_advice = "賣出 (向下突破)"
+            signal = SIGNAL_BOOKS[11]
+            return signal
 
-    return action_advice, signal_description
-
-
+    return signal
 
 class Strategy:
     def __init__(self, capital=100000, leverage=3, unit=100):
@@ -319,6 +526,21 @@ class StrategyThread:
         self.interval = interval
         self.last_signal = ""
 
+        # setting variables
+        # 停損點
+        self.stop_loss_pct = 0.05  # 初始停損點 (5%)
+        self.trailing_stop_pct = 0.03  # 移動停利/損點 (3%)
+
+        # collect variables
+        self.trading_type = "LONG"  # 交易類型：LONG 或 SHORT
+        self.trading_records = []  # 紀錄每次交易的詳細資訊 {"timestamp":..., "type":..., "price":..., "size":...}
+        self.entry_price = None  # 記錄進場價格
+        self.position = 0            # 持倉數量
+        self.avg_buy_price = None    # 記錄平均買入價格
+        self.top_price_after_buy = None   # 買入後最高價 (移動停損用)
+        self.now_price = None          # 最新價格
+        self.pnl = 0                 # 未實現損益
+
 
     def _run(self):
 
@@ -331,21 +553,30 @@ class StrategyThread:
                 df["ema120"] = df["close"].ewm(span=120, adjust=False).mean()
                 df["avg_vol"] = df["volume"].rolling(20, min_periods=1).mean()
 
+                pre_row=df.iloc[-2]
                 latest_row = df.iloc[-1]
 
-                action_advice, signal_description=analyze_trading_signal(current_price=latest_row.close,
+                signal:{}=analyze_trading_signal(current_price=latest_row.close,
                                        ema20=latest_row.ema20,
                                        ema60=latest_row.ema60,
                                        ema120=latest_row.ema120,
                                        volume=latest_row.volume,
-                                       avg_volume=latest_row.avg_vol
+                                       avg_volume=latest_row.avg_vol,
+                                        prev_ema20=pre_row.ema20,
+                                        prev_ema60=pre_row.ema60,
+                                        prev_ema120=pre_row.ema120
                                        )
-                if self.last_signal==f"{action_advice};{signal_description}":
+                # if self.last_signal==f"{action_advice};{signal_description}":
+                #     continue
+                # else:
+                #     self.last_signal=f"{action_advice};{signal_description}"
+                #     print(f"{latest_row.name} price:{latest_row.close} action_advice: {action_advice}, signal_description: {signal_description}")
+
+                if self.last_signal==signal:
                     continue
                 else:
-                    self.last_signal=f"{action_advice};{signal_description}"
-                    print(f"{latest_row.name} price:{latest_row.close} action_advice: {action_advice}, signal_description: {signal_description}")
-
+                    self.last_signal=signal
+                    print(f"{latest_row.name} price:{latest_row.close} ... signal: {signal}")
 
                 # signal, pos_size = self.strategy.check_signal(
                 #     close=latest_row.close,

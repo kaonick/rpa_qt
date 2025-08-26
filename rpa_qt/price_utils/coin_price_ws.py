@@ -106,8 +106,25 @@ class KlineWebSocket:
         def on_close(ws, close_status_code, close_msg):
             print(f"WebSocket {self.symbol} {interval} 關閉")
 
-        ws = websocket.WebSocketApp(url, on_message=on_message, on_error=on_error, on_close=on_close)
-        ws.run_forever()
+        # 原作法：若發生異常，會直接停止，不會重連
+        # ws = websocket.WebSocketApp(url, on_message=on_message, on_error=on_error, on_close=on_close)
+        # ws.run_forever()
+
+        # 新作法：會重新連線。
+        # Auto-reconnect loop
+        while True:
+            try:
+                ws = websocket.WebSocketApp(
+                    url,
+                    on_message=on_message,
+                    on_error=on_error,
+                    on_close=on_close
+                )
+                ws.run_forever(ping_interval=20, ping_timeout=10)  # 可設定 ping 保活
+            except Exception as e:
+                print(f"[EXCEPTION] WebSocket {self.symbol} {interval} exception: {e}")
+            print(f"[RECONNECT] Reconnecting WebSocket {self.symbol} {interval} in 5s...")
+            time.sleep(5)
 
     def start(self):
         """啟動所有 interval 的 WebSocket"""
