@@ -24,6 +24,8 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
+from rpa_qt.db.df_utils import csv_to_df
+from rpa_qt.root import ROOT_DIR
 
 # ------ 參數區 ------
 N_PCT = 0.15  # n（下跌百分比）= 15%
@@ -54,6 +56,19 @@ def load_universe() -> List[str]:
         "2412",  # 中華電
         "3481",  # 群創
     ]
+    # project path
+    project_root = ROOT_DIR
+    symbol_path = project_root+"/price_utils/tw_tickers_detailed.csv"
+    symbols_df=csv_to_df(symbol_path)
+    # get 'symbol' column as list
+    if 'symbol' in symbols_df.columns:
+        items = symbols_df['symbol'].astype(str).str.strip().tolist()
+        # 僅保留數字
+        items = [s for s in items if s.isdigit()]
+        if items:
+            return items
+
+
     path = "tw_tickers.txt"
     if os.path.exists(path):
         with io.open(path, "r", encoding="utf-8") as f:
