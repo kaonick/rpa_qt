@@ -5,7 +5,10 @@
 
 ### Roadmap:
 * [x] 取得台股股票清單。
-* [x] 取得個股歷史K線資料。
+* [x] 取得個股歷史K線資料。yf_api.py
+  * [x] K線。OHLCV。
+  * [x] yf_quarter_financials：取得個股財報資料。
+
 * [x] 交易方案：
   * [x] trading_rebound：反彈區間交易策略。
     * [x] 載入股票清單。load_universe()

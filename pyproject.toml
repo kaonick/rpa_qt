@@ -3,7 +3,7 @@ name = "rpa-qt"
 version = "0.1.0"
 description = ""
 authors = [{ name = "Nick Kao", email = "kaonick@gmail.com" }]
-requires-python = "~=3.9"
+requires-python = "~=3.12.9"
 readme = "README.md"
 dependencies = [
     # os
@@ -15,14 +15,14 @@ dependencies = [
     "tqdm>=4.67.1,<5",
     "webdriver-manager>=4.0.2,<5",
     "chromedriver-autoinstaller>=0.6.4,<0.7",
-    "selenium>=4.27.1,<5",
+    "selenium>=4.35.0,<5",
     "seleniumbase>=4.33.11,<5",
     "undetected-chromedriver>=3.5.5,<4",
     "selenium-stealth>=1.0.6,<2",
     # db and data processing
     "pandas>=2.2.3,<3",
     "matplotlib>=3.9.4",
-        "mplfinance>=0.12.10b0",# 畫交易線圖用，例如K線圖
+    "mplfinance>=0.12.10b0", # 畫交易線圖用，例如K線圖
     "pydantic>=2.10.3,<3",
     "tabulate>=0.9.0,<0.10",
     "scikit-learn>=1.4.0,<2",
@@ -48,7 +48,9 @@ dependencies = [
     "yfinance>=0.2.65",
     "ccxt>=4.5.0", # CryptoCurrency eXchange Trading Library
     "dash>=3.2.0",
-
+    "openai>=1.107.0",
+    "python-dotenv>=1.1.1",
+    "fubon-neo",
 ]
 
 [tool.hatch.build.targets.sdist]
@@ -56,6 +58,9 @@ include = ["rpa_qt"]
 
 [tool.hatch.build.targets.wheel]
 include = ["rpa_qt"]
+
+[tool.uv.sources]
+fubon-neo = { path = "whl/fubon_neo-2.2.4-cp37-abi3-win_amd64.whl" }
 
 [build-system]
 requires = ["hatchling"]

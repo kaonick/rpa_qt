@@ -28,11 +28,20 @@ from rpa_qt.db.df_utils import csv_to_df
 from rpa_qt.root import ROOT_DIR
 
 # ------ 參數區 ------
-N_PCT = 0.15  # n（下跌百分比）= 15%
+# v2
+N_PCT = 0.20  # n（下跌百分比）= 15%
 MIN_REBOUND = 0.5 * N_PCT  # 反彈至少 0.5n
-LOOKBACK_MONTHS = 3        # 抓近3個月日K
+LOOKBACK_MONTHS = 6        # 抓近3個月日K
 EXTRA_BUFFER_DAYS = 20     # 多抓幾天，避免不完整窗口
 PIVOT_NEIGHBOR = 1         # 判定區域極值時的鄰近比較天數（1=嚴格相鄰）
+
+
+# v1
+# N_PCT = 0.15  # n（下跌百分比）= 15%
+# MIN_REBOUND = 0.5 * N_PCT  # 反彈至少 0.5n
+# LOOKBACK_MONTHS = 3        # 抓近3個月日K
+# EXTRA_BUFFER_DAYS = 20     # 多抓幾天，避免不完整窗口
+# PIVOT_NEIGHBOR = 1         # 判定區域極值時的鄰近比較天數（1=嚴格相鄰）
 
 
 def load_universe() -> List[str]:
@@ -218,6 +227,8 @@ def scan_symbol(numeric_code: str, n_pct: float = N_PCT, min_rebound: float = MI
     buy_high = pc
 
     last_close = float(close.iloc[-1])
+    last_date= df.index[-1]
+    # last_date= last_date.date()
     in_zone = (buy_low <= last_close <= buy_high)
 
     if not in_zone:
@@ -241,6 +252,7 @@ def scan_symbol(numeric_code: str, n_pct: float = N_PCT, min_rebound: float = MI
         "buy_low": round(buy_low, 2),
         "stop_loss": round(pb, 2),
         "last_close": round(last_close, 2),
+        "last_date": last_date.date(),
     }
 
 

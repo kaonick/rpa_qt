@@ -63,20 +63,43 @@ def fetch_twse_tickers():
 
 
 
+# filter daily volume 必須大於 1000張以上
+def filter_by_volume(df: pd.DataFrame, min_volume: int = 1000) -> pd.DataFrame:
+    filtered_symbols = []
+    for symbol in df['symbol']:
+        ticker = symbol + ('.TW' if df[df['symbol'] == symbol]['market'].values[0] == '上市' else '.TWO')
+        stock = yf.Ticker(ticker)
+        hist = stock.history(period="3mo")
+        if not hist.empty and hist['Volume'].mean() >= min_volume * 1000:  # 1000張 = 1000*1000股
+            filtered_symbols.append(symbol)
+    return df[df['symbol'].isin(filtered_symbols)]
 
+def tmp_get_tw_tickers():
+    tickers_df = fetch_twse_tickers()
+    print(f"共取得 {len(tickers_df)} 檔台股代號")
+    df_to_csv(tickers_df, "tw_tickers_detailed.csv")
 
-
-def get_tw_tickers_yf() -> pd.DataFrame:
-    symbols = [code + ('.TW' if exch == 'TWSE' else '.TWO') for code, exch in tickers.items()]
-    # 範例取得 10 檔股票的收盤價
-    df = yf.download(" ".join(symbols[:10]), period="1mo")
-    print(df)
-    return df
-
-if __name__ == '__main__':
-    # tickers_df = fetch_twse_tickers()
-    # print(f"共取得 {len(tickers_df)} 檔台股代號")
-    # df_to_csv(tickers_df, "tw_tickers_detailed.csv")
+def tmp_filter_by_volume():
+    # load tw_tickers_detailed.csv
+    df = csv_to_df(file_path="tw_tickers_detailed.csv")
+    print(f"原始資料共 {len(df)} 檔股票")
+    filtered_df = filter_by_volume(df, min_volume=1000)
+    print(f"篩選後共 {len(filtered_df)} 檔股票")
+    # save to tw_tickers_big_volume.csv
+    df_to_csv(filtered_df, "tw_tickers_big_volume.csv")
 
     df=csv_to_df(file_path="tw_tickers_detailed.csv")
     print(df.head())
+
+
+# def get_tw_tickers_yf() -> pd.DataFrame:
+#     symbols = [code + ('.TW' if exch == 'TWSE' else '.TWO') for code, exch in tickers.items()]
+#     # 範例取得 10 檔股票的收盤價
+#     df = yf.download(" ".join(symbols[:10]), period="1mo")
+#     print(df)
+#     return df
+
+if __name__ == '__main__':
+    # tmp_get_tw_tickers()
+    tmp_filter_by_volume()
+
