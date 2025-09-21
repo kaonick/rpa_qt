@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多步驟登入</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f2f5; }
+        .container { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 450px; text-align: center; }
+        .step { display: none; }
+        .step.active { display: block; }
+        h2 { margin-bottom: 25px; color: #333; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .error-message { color: #e74c3c; font-size: 14px; margin-top: 8px; display: none; }
+        .btn-primary { width: 100%; padding: 15px; border: none; background-color: #007bff; color: #fff; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: background-color 0.3s; }
+        .btn-primary:hover { background-color: #0056b3; }
+        .oauth-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+        .oauth-btn { display: flex; align-items: center; justify-content: center; padding: 12px; border-radius: 8px; text-decoration: none; color: #555; border: 1px solid #ddd; transition: background-color 0.3s; }
+        .oauth-btn img { width: 24px; height: 24px; margin-right: 12px; }
+        #loading-message { margin-top: 20px; color: #007bff; font-weight: bold; }
+        .back-link { margin-top: 20px; display: block; color: #007bff; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="step-1" class="step active">
+        <h2>登入帳戶</h2>
+        <div class="input-group">
+            <label for="login-id">電子郵件或手機號碼</label>
+            <input type="text" id="login-id" name="login-id" placeholder="請輸入電子郵件或手機號碼" required>
+            <span id="login-id-error" class="error-message"></span>
+        </div>
+        <button id="next-step-1" class="btn-primary">下一步</button>
+        <div style="margin: 25px 0; color: #aaa;">或使用第三方帳號登入</div>
+        <div class="oauth-buttons">
+            <a href="#" class="oauth-btn" data-provider="google"><img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google"> 使用 Google 登入</a>
+            <a href="#" class="oauth-btn" data-provider="apple"><img src="https://img.icons8.com/ios-filled/50/ffffff/mac-os.png" alt="Apple" style="filter: invert(1);"> 使用 Apple 登入</a>
+            <a href="#" class="oauth-btn" data-provider="facebook"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Facebook"> 使用 Facebook 登入</a>
+            <a href="#" class="oauth-btn" data-provider="line"><img src="https://img.icons8.com/color/48/000000/line-me.png" alt="Line"> 使用 LINE 登入</a>
+        </div>
+    </div>
+
+    <div id="step-2" class="step">
+        <h2>輸入密碼</h2>
+        <p>請輸入您的密碼來完成登入。</p>
+        <div class="input-group">
+            <label for="password">密碼</label>
+            <input type="password" id="password" name="password" required>
+            <span id="password-error" class="error-message"></span>
+        </div>
+        <button id="next-step-2" class="btn-primary">下一步</button>
+        <a href="#" class="back-link" data-step="1">返回上一步</a>
+    </div>
+
+    <div id="step-3" class="step">
+        <h2>輸入驗證碼</h2>
+        <p>我們已將驗證碼發送至 <span id="verification-target"></span>。</p>
+        <div class="input-group">
+            <label for="verification-code">驗證碼</label>
+            <input type="text" id="verification-code" name="verification-code" required>
+            <span id="verification-code-error" class="error-message"></span>
+        </div>
+        <button id="submit-btn" class="btn-primary">確認驗證碼</button>
+        <a href="#" class="back-link" data-step="2">返回上一步</a>
+    </div>
+
+    <div id="step-4" class="step">
+        <h2>登入成功！</h2>
+        <p>您已成功登入，正在為您跳轉至主頁...</p>
+    </div>
+</div>
+
+<script src="step_login.js"></script>
+</body>
+</html>

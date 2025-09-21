@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modular Home Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="/imgs/favicon.png">
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+    .navi-block { display: flex; align-items: center; padding: 10px 20px; background: #f8f9fa; }
+    .navi-block .logo-title { margin-right: auto; display: flex; align-items: center; cursor: pointer; }
+    .navi-block .logo-title img { height: 32px; margin-right: 10px; }
+    .navi-block .search-bar { flex-grow: 1; max-width: 400px; display: flex; margin: 0 20px; }
+    .navi-block .search-bar input { flex: 1; }
+    .navi-block .icon-btn { background: none; border: none; margin-left: 15px; position: relative; }
+    .dropdown-panel { position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ccc; padding: 10px; width: 250px; z-index: 1000; display: none; }
+    .dropdown-panel.show { display: block; }
+    .categoryList-block { background: #e9ecef; padding: 10px 20px; }
+    .content-block { padding: 20px; }
+  </style>
+</head>
+<body>
+  <!-- Navi-block -->
+  <div class="navi-block">
+    <div class="logo-title" onclick="loadPage('home')">
+      <img src="/imgs/logo.png" alt="Logo" />
+      <strong>MySite</strong>
+    </div>
+    <div class="search-bar">
+      <input id="searchInput" class="form-control" type="text" placeholder="Search..." onkeydown="if(event.key==='Enter') search()">
+      <button class="btn btn-outline-secondary" onclick="search()">🔍</button>
+    </div>
+    <button class="icon-btn" onclick="togglePanel('infoPanel')">🔔
+      <div id="infoPanel" class="dropdown-panel">
+        <div id="infoList"></div>
+      </div>
+    </button>
+    <button class="icon-btn" onclick="togglePanel('settingPanel')">⚙️
+      <div id="settingPanel" class="dropdown-panel">
+<!--        <button onclick="loadPage('settings')">⚙️ 系統設定</button>-->
+          <div id="settingCard"></div>
+      </div>
+    </button>
+    <button class="icon-btn" onclick="togglePanel('userPanel')">👤
+      <div id="userPanel" class="dropdown-panel">
+<!--        <button onclick="loadPage('profile', { userId: 123 })">👤 個人資料</button>-->
+          <div id="userCard"></div>
+      </div>
+    </button>
+  </div>
+
+  <!-- Category List -->
+  <div class="categoryList-block">
+    <strong>分類：</strong> 旅遊 | 美食 | 科技 | 時事
+  </div>
+
+  <!-- Content Block -->
+  <div class="content-block" id="content-block">
+    <p>歡迎使用本站，請從選單選擇頁面。</p>
+  </div>
+
+  <script>
+    function togglePanel(id) {
+      const panel = document.getElementById(id);
+      const isOpen = panel.classList.contains('show');
+      document.querySelectorAll('.dropdown-panel').forEach(p => p.classList.remove('show'));
+      if (!isOpen) panel.classList.add('show');
+    }
+
+    function search() {
+      const query = document.getElementById('searchInput').value.trim();
+      if (!query) return;
+      const results = Array.from({ length: 5 }, (_, i) => `<li>搜尋結果 ${i + 1}：與「${query}」有關的內容</li>`).join('');
+      document.getElementById('content-block').innerHTML = `
+        <h5>搜尋「${query}」的結果：</h5>
+        <ul>${results}</ul>
+        <nav><button>上一頁</button> <button>下一頁</button></nav>
+      `;
+    }
+
+    // ✅ Load sub-page HTML + JS + CSS dynamically
+    function loadPage(page, params = {}) {
+      fetch(`pages/${page}.html`)
+        .then(res => res.text())
+        .then(html => {
+          const container = document.getElementById("content-block");
+          container.innerHTML = "";
+
+          // 清除子頁 CSS
+          document.querySelectorAll("[data-sub-style]").forEach(el => el.remove());
+
+          const temp = document.createElement("div");
+          temp.innerHTML = html;
+
+          // 把 style 和 link 放進 head
+          temp.querySelectorAll("style, link[rel='stylesheet']").forEach(el => {
+            el.dataset.subStyle = "true";
+            document.head.appendChild(el.cloneNode(true));
+          });
+
+          // 剩下的內容放進 content-block
+          temp.querySelectorAll(":not(style):not(link)").forEach(el => {
+            container.appendChild(el);
+          });
+
+          // 載入 JS，並執行初始化 function（如有）
+          document.querySelectorAll("script[data-dynamic]").forEach(s => s.remove());
+          const script = document.createElement("script");
+          script.src = `js/${page}.js`;
+          script.dataset.dynamic = "true";
+          script.onload = () => {
+            if (typeof window[`init_${page}`] === 'function') {
+              window[`init_${page}`](params);
+            }
+          };
+          document.body.appendChild(script);
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById("content-block").innerHTML = "<p>無法載入頁面</p>";
+        });
+    }
+
+    // 模擬通知
+    window.onload = () => {
+      const infoList = document.getElementById('infoList');
+      const notifications = [
+        '🔔 新通知 1',
+        '🔔 新通知 2',
+        '🔔 新通知 3'
+      ];
+      infoList.innerHTML = notifications.map(msg =>
+        `<div>${msg} <button onclick="this.parentElement.remove()">🗑️</button></div>`).join('');
+
+      // setting card
+      const settingCard = document.getElementById('settingCard');
+      settingCard.innerHTML = `
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+          <div><button onclick="loadPage('settings')">⚙️ 系統設定</button></div>
+          <div>項目 2</div>
+          <div>項目 3</div>
+          <div>項目 4</div>
+          <div>項目 5</div>
+          <div>項目 6</div>
+        </div>
+      `;
+
+    };
+  </script>
+</body>
+</html>

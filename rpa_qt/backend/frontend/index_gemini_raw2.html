@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>網站主頁</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 自訂滾動條樣式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* 確保浮動視窗在最上層 */
+        .popup-window {
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans h-screen flex flex-col overflow-hidden">
+
+    <!-- Navi-block: 頂部導覽列 -->
+    <nav id="navi-block" class="bg-white shadow-md w-full flex items-center justify-between px-4 py-2 flex-shrink-0 z-40">
+        <!-- Logo & Title -->
+        <a href="#" class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m-3-1l-1.5.545m0 0l-2.25 4.5 2.25-3m-2.25 3l-2.25-4.5m0 0l-2.25 4.5m2.25-3l-2.25-4.5" />
+            </svg>
+            <span class="text-xl font-bold text-gray-800">公司主頁</span>
+        </a>
+
+        <!-- Search -->
+        <div class="flex-1 max-w-xl mx-4">
+            <form id="search-form" class="relative">
+                <input type="text" id="search-input" placeholder="全站搜尋..." class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" class="absolute right-0 top-0 mt-1 mr-2 p-2 rounded-full text-gray-500 hover:bg-gray-200">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- Icons -->
+        <div class="flex items-center gap-4">
+            <!-- Info -->
+            <div class="relative">
+                <button id="info-btn" class="p-2 rounded-full hover:bg-gray-200">
+                    <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+                <div id="info-popup" class="popup-window hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border">
+                    <div class="p-3 border-b font-bold text-gray-700">通知訊息</div>
+                    <ul id="notification-list" class="py-2 max-h-96 overflow-y-auto">
+                        <!-- Notification items will be injected here -->
+                    </ul>
+                </div>
+            </div>
+            <!-- Setting -->
+            <div class="relative">
+                <button id="setting-btn" class="p-2 rounded-full hover:bg-gray-200">
+                    <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-1.007 1.11-1.226.55-.22 1.156-.22 1.705 0 .55.22 1.02.684 1.11 1.226l.082.498a1.5 1.5 0 001.492 1.352h.532c.554 0 1.05.343 1.25.844l.09.261a1.5 1.5 0 00.733 1.06l.437.291c.506.337.803.93.734 1.536l-.04.321a1.5 1.5 0 00-.734 1.536l.04.321c.07.606-.228 1.2-.734 1.536l-.437.291a1.5 1.5 0 00-.733 1.06l-.09.261c-.2.501-.7.844-1.25.844h-.532a1.5 1.5 0 00-1.492 1.352l-.082.498c-.09.542-.56 1.007-1.11 1.226-.55.22-1.156-.22-1.705 0-.55.22-1.02.684-1.11 1.226l-.082-.498a1.5 1.5 0 00-1.492-1.352h-.532c-.554 0-1.05-.343-1.25-.844l-.09-.261a1.5 1.5 0 00-.733-1.06l-.437-.291c-.506-.337-.803-.93-.734-1.536l.04-.321a1.5 1.5 0 00.734-1.536l-.04-.321c-.07-.606.228-1.2.734-1.536l.437.291a1.5 1.5 0 00.733 1.06l.09-.261c.2-.501.7-.844-1.25-.844h.532a1.5 1.5 0 001.492-1.352l.082-.498z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+                <div id="setting-popup" class="popup-window hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border">
+                    <ul class="py-2">
+                        <li><a href="#" class="setting-item flex items-center gap-3 px-4 py-2 hover:bg-gray-100" data-page="通知設定"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>通知</a></li>
+                        <li><a href="#" class="setting-item flex items-center gap-3 px-4 py-2 hover:bg-gray-100" data-page="色彩設定"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.375 3.375 0 013.375 17.625a3.375 3.375 0 013.375-3.375h1.5m3.75 0a3.375 3.375 0 013.375 3.375a3.375 3.375 0 01-3.375 3.375h-1.5m3.75 0a3.375 3.375 0 013.375 3.375a3.375 3.375 0 01-3.375 3.375h-1.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>色彩</a></li>
+                        <li><a href="#" class="setting-item flex items-center gap-3 px-4 py-2 hover:bg-gray-100" data-page="字體設定"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" /></svg>字體</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- User Avatar -->
+            <div class="relative">
+                <button id="user-btn" class="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 hover:border-blue-500">
+                    <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=User" alt="User Avatar">
+                </button>
+                <div id="user-popup" class="popup-window hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border">
+                    <ul class="py-2">
+                        <li><a href="#" class="user-item flex items-center gap-3 px-4 py-2 hover:bg-gray-100" data-page="編輯Profile"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>編輯Profile</a></li>
+                        <li><a href="#" class="user-item flex items-center gap-3 px-4 py-2 hover:bg-gray-100" data-page="密碼變更"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>密碼變更</a></li>
+                        <li class="border-t my-1"></li>
+                        <li><a href="#" class="user-item flex items-center gap-3 px-4 py-2 hover:bg-gray-100" data-page="登出"><svg class="w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg>登出</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="flex flex-1 overflow-hidden">
+
+        <!-- categoryList-block: 左側分類列表 -->
+        <aside id="category-list-block" class="bg-white flex-shrink-0 transition-all duration-300 ease-in-out w-3/10 relative border-r">
+            <!-- Collapsible content wrapper -->
+            <div id="category-collapsible-content" class="h-full flex flex-col transition-opacity duration-300 ease-in-out">
+                <!-- Header with Tabs -->
+                <div class="p-2 border-b flex items-center flex-shrink-0">
+                    <div id="category-tabs" class="flex-grow">
+                        <button class="category-tab-btn px-4 py-2 text-sm font-semibold text-blue-600 border-b-2 border-blue-600" data-target="store-tree">店家</button>
+                        <button class="category-tab-btn px-4 py-2 text-sm font-semibold text-gray-500" data-target="category-tree">類別</button>
+                    </div>
+                </div>
+                <!-- Tree Content -->
+                <div class="flex-grow overflow-y-auto p-4">
+                    <ul id="store-tree" class="space-y-2">
+                        <!-- Store tree items will be injected here -->
+                    </ul>
+                    <ul id="category-tree" class="hidden space-y-2">
+                        <!-- Category tree items will be injected here -->
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- content-block: 右側主內容 -->
+        <main id="content-block" class="flex-1 flex flex-col p-6 overflow-y-auto transition-all duration-300 ease-in-out w-7/10">
+            <!-- Breadcrumb and Search -->
+            <div class="flex justify-between items-center mb-4 pb-2 border-b flex-shrink-0">
+                <div class="flex items-center gap-2">
+                    <button id="category-toggle-btn" class="p-2 rounded-full hover:bg-gray-200">
+                        <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                        </svg>
+                    </button>
+                    <div id="breadcrumb" class="text-sm text-gray-500">
+                        <span>首頁</span>
+                    </div>
+                </div>
+                <div class="relative">
+                    <input type="text" placeholder="在此區塊中搜尋..." class="w-64 px-3 py-1 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    <svg class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
+            </div>
+            <!-- Dynamic Content -->
+            <div id="dynamic-content" class="flex-grow">
+                <div class="text-center py-20">
+                    <h1 class="text-3xl font-bold text-gray-700">歡迎使用</h1>
+                    <p class="text-gray-500 mt-2">請從左側選單選擇項目，或使用上方搜尋功能。</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- DOM Elements ---
+    const naviBlock = document.getElementById('navi-block');
+    const categoryListBlock = document.getElementById('category-list-block');
+    const contentBlock = document.getElementById('content-block');
+    const categoryToggleBtn = document.getElementById('category-toggle-btn');
+    const categoryCollapsibleContent = document.getElementById('category-collapsible-content');
+    const dynamicContent = document.getElementById('dynamic-content');
+    const breadcrumb = document.getElementById('breadcrumb');
+
+    // Popups and Buttons
+    const popups = {
+        info: { btn: document.getElementById('info-btn'), popup: document.getElementById('info-popup') },
+        setting: { btn: document.getElementById('setting-btn'), popup: document.getElementById('setting-popup') },
+        user: { btn: document.getElementById('user-btn'), popup: document.getElementById('user-popup') }
+    };
+
+    // Search
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
+
+    // Category List
+    const categoryTabs = document.querySelectorAll('.category-tab-btn');
+    const storeTree = document.getElementById('store-tree');
+    const categoryTree = document.getElementById('category-tree');
+
+    // --- Mock Data ---
+    const mockNotifications = [
+        { id: 1, text: '系統將於 03:00 AM 進行維護。', time: '5分鐘前' },
+        { id: 2, text: '您的訂單 #1025 已出貨。', time: '1小時前' },
+        { id: 3, text: '張經理分享了一份文件給您。', time: '3小時前' },
+        { id: 4, text: '歡迎使用新版系統！', time: '1天前' }
+    ];
+
+    const mockStoreData = [
+        { type: '飯店', stores: ['福華大飯店', '君悅酒店', '喜來登大飯店'] },
+        { type: '餐飲', stores: ['鼎泰豐', '王品牛排', '海底撈'] },
+        { type: '零售', stores: ['新光三越', '遠東百貨', '誠品生活'] }
+    ];
+
+    const mockCategoryData = [
+        { type: '電子產品', categories: ['手機', '筆記型電腦', '相機'] },
+        { type: '居家生活', categories: ['廚具', '寢具', '清潔用品'] }
+    ];
+
+    // --- Functions ---
+
+    // Close all popups
+    function closeAllPopups() {
+        Object.values(popups).forEach(p => p.popup.classList.add('hidden'));
+    }
+
+    // Update breadcrumb
+    function updateBreadcrumb(pathArray) {
+        breadcrumb.innerHTML = pathArray.map((item, index) => {
+            if (index < pathArray.length - 1) {
+                return `<span class="text-gray-500">${item}</span><span class="mx-2">/</span>`;
+            }
+            return `<span class="font-semibold text-gray-800">${item}</span>`;
+        }).join('');
+    }
+
+    // Render content for a specific page
+    function renderPage(type, pageName) {
+        let path = [];
+        let contentHTML = '';
+
+        if (type === 'user' || type === 'setting') {
+            path = ['作業', pageName];
+            contentHTML = `<div class="p-8 bg-white rounded-lg shadow">
+                <h2 class="text-2xl font-bold mb-4">${pageName}</h2>
+                <p>這裡是「${pageName}」的設定頁面內容。</p>
+                <!-- Add form elements or other content here -->
+            </div>`;
+        } else if (type === 'store') {
+            path = ['資料', '店家', pageName];
+            contentHTML = `<div class="p-8 bg-white rounded-lg shadow">
+                <h2 class="text-2xl font-bold mb-4">${pageName} - 商品列表</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    ${Array(6).fill(0).map((_, i) => `
+                        <div class="border rounded-lg p-4">
+                            <div class="bg-gray-200 h-32 rounded mb-2"></div>
+                            <h3 class="font-bold">商品 ${i + 1}</h3>
+                            <p class="text-sm text-gray-600">商品描述文字...</p>
+                            <p class="text-lg font-semibold text-blue-600 mt-2">$${Math.floor(Math.random() * 1000) + 100}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>`;
+        } else if (type === 'search') {
+             path = ['搜尋結果', `"${pageName}"`];
+             contentHTML = `<div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">關於 "${pageName}" 的搜尋結果</h2>
+                <div class="space-y-6">
+                    ${Array(10).fill(0).map((_, i) => `
+                        <div>
+                            <a href="#" class="text-lg text-blue-700 hover:underline">搜尋結果標題 ${i + 1}</a>
+                            <p class="text-sm text-green-700">https://example.com/result/${i+1}</p>
+                            <p class="text-gray-600 mt-1">這是關於搜尋結果的簡短描述文字，幫助使用者快速了解內容摘要...</p>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="mt-8 flex justify-center items-center gap-2 text-sm">
+                    <a href="#" class="px-3 py-1 border rounded hover:bg-gray-100">‹ 上一頁</a>
+                    <a href="#" class="px-3 py-1 border rounded bg-blue-500 text-white">1</a>
+                    <a href="#" class="px-3 py-1 border rounded hover:bg-gray-100">2</a>
+                    <a href="#" class="px-3 py-1 border rounded hover:bg-gray-100">3</a>
+                    <span>...</span>
+                    <a href="#" class="px-3 py-1 border rounded hover:bg-gray-100">10</a>
+                    <a href="#" class="px-3 py-1 border rounded hover:bg-gray-100">下一頁 ›</a>
+                </div>
+             </div>`;
+        }
+
+        dynamicContent.innerHTML = contentHTML;
+        updateBreadcrumb(path);
+    }
+
+    // --- Event Listeners ---
+
+    // Popup toggles
+    Object.keys(popups).forEach(key => {
+        popups[key].btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = popups[key].popup.classList.contains('hidden');
+            closeAllPopups();
+            if (isHidden) {
+                popups[key].popup.classList.remove('hidden');
+            }
+        });
+    });
+
+    // Global click to close popups
+    document.addEventListener('click', () => {
+        closeAllPopups();
+    });
+
+    // Prevent popups from closing when clicked inside
+    Object.values(popups).forEach(p => {
+        p.popup.addEventListener('click', e => e.stopPropagation());
+    });
+
+    // Category list toggle
+    categoryToggleBtn.addEventListener('click', () => {
+        categoryListBlock.classList.toggle('w-3/10');
+        categoryListBlock.classList.toggle('w-0');
+
+        contentBlock.classList.toggle('w-7/10');
+        contentBlock.classList.toggle('w-full');
+
+        categoryCollapsibleContent.classList.toggle('opacity-0');
+        categoryCollapsibleContent.classList.toggle('pointer-events-none');
+    });
+
+    // Search form submission
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = searchInput.value.trim();
+        if (query) {
+            renderPage('search', query);
+            searchInput.value = '';
+        }
+    });
+
+    // Setting and User menu items
+    document.querySelectorAll('.setting-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderPage('setting', e.currentTarget.dataset.page);
+            closeAllPopups();
+        });
+    });
+    document.querySelectorAll('.user-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderPage('user', e.currentTarget.dataset.page);
+            closeAllPopups();
+        });
+    });
+
+    // Category tabs
+    categoryTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            categoryTabs.forEach(t => {
+                t.classList.remove('text-blue-600', 'border-blue-600');
+                t.classList.add('text-gray-500');
+            });
+            e.currentTarget.classList.add('text-blue-600', 'border-blue-600');
+            e.currentTarget.classList.remove('text-gray-500');
+
+            document.getElementById('store-tree').classList.add('hidden');
+            document.getElementById('category-tree').classList.add('hidden');
+            document.getElementById(e.currentTarget.dataset.target).classList.remove('hidden');
+        });
+    });
+
+    // Tree view interaction
+    function setupTreeListeners(treeElement) {
+        treeElement.addEventListener('click', (e) => {
+            const target = e.target;
+            // Handle expand/collapse
+            if (target.matches('.tree-item-toggle, .tree-item-toggle *')) {
+                const parentLi = target.closest('li');
+                const sublist = parentLi.querySelector('ul');
+                const icon = parentLi.querySelector('.toggle-icon');
+                if (sublist) {
+                    sublist.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-90');
+                }
+            }
+            // Handle item selection
+            else if (target.matches('.tree-leaf-item')) {
+                renderPage('store', target.textContent.trim());
+            }
+        });
+    }
+
+    // --- Initial Population ---
+
+    // Populate notifications
+    const notificationList = document.getElementById('notification-list');
+    notificationList.innerHTML = mockNotifications.map(n => `
+        <li class="notification-item flex items-start gap-3 p-3 hover:bg-gray-100">
+            <div class="flex-grow">
+                <p class="text-sm text-gray-800">${n.text}</p>
+                <p class="text-xs text-gray-500 mt-1">${n.time}</p>
+            </div>
+            <button class="mark-as-read p-1 text-gray-400 hover:text-red-500">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+            </button>
+        </li>
+    `).join('');
+    notificationList.addEventListener('click', (e) => {
+        if (e.target.closest('.mark-as-read')) {
+            e.target.closest('.notification-item').style.display = 'none';
+        }
+    });
+
+    // Populate store tree
+    storeTree.innerHTML = mockStoreData.map(group => `
+        <li>
+            <div class="tree-item-toggle flex items-center justify-between p-2 rounded hover:bg-gray-100 cursor-pointer">
+                <span class="font-semibold text-gray-700">${group.type}</span>
+                <svg class="toggle-icon w-4 h-4 text-gray-500 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </div>
+            <ul class="hidden pl-4 mt-1 space-y-1 border-l ml-2">
+                ${group.stores.map(store => `
+                    <li><a href="#" class="tree-leaf-item block p-2 rounded text-gray-600 hover:bg-blue-50 hover:text-blue-600">${store}</a></li>
+                `).join('')}
+            </ul>
+        </li>
+    `).join('');
+
+    // Populate category tree
+    categoryTree.innerHTML = mockCategoryData.map(group => `
+        <li>
+            <div class="tree-item-toggle flex items-center justify-between p-2 rounded hover:bg-gray-100 cursor-pointer">
+                <span class="font-semibold text-gray-700">${group.type}</span>
+                <svg class="toggle-icon w-4 h-4 text-gray-500 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </div>
+            <ul class="hidden pl-4 mt-1 space-y-1 border-l ml-2">
+                ${group.categories.map(cat => `
+                    <li><a href="#" class="tree-leaf-item block p-2 rounded text-gray-600 hover:bg-blue-50 hover:text-blue-600">${cat}</a></li>
+                `).join('')}
+            </ul>
+        </li>
+    `).join('');
+
+    setupTreeListeners(storeTree);
+    setupTreeListeners(categoryTree);
+});
+</script>
+
+</body>
+</html>

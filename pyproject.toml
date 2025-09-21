@@ -7,6 +7,7 @@ requires-python = "~=3.12.9"
 readme = "README.md"
 dependencies = [
     # os
+    "python-dotenv>=1.1.1",
     "psutil>=6.1.0,<7",
     "schedule>=1.2.2,<2",
     "celery>=5.4.0,<6",
@@ -19,27 +20,43 @@ dependencies = [
     "seleniumbase>=4.33.11,<5",
     "undetected-chromedriver>=3.5.5,<4",
     "selenium-stealth>=1.0.6,<2",
-    # db and data processing
+    # db `
+    "pydantic_settings>=2.10.1",
+    "sqlalchemy>=2.0.42",
+    "redis>=5.3.1",
+    "redis-om>=0.3.5",
+    "mysql-connector-python>=9.4.0",
+    "cx-oracle>=8.3.0",
+    "aiomysql>=0.2.0",
+    "paho-mqtt>=2.1.0",
+    "websocket-client>=1.8.0",
+    # data processing
     "pandas>=2.2.3,<3",
     "matplotlib>=3.9.4",
     "mplfinance>=0.12.10b0", # 畫交易線圖用，例如K線圖
-    "pydantic>=2.10.3,<3",
+    #    "pydantic>=2.10.3,<3",
     "tabulate>=0.9.0,<0.10",
     "scikit-learn>=1.4.0,<2",
-    "sqlmodel>=0.0.22,<0.0.23",
-    "mysql-connector-python>=8.3.0,<9",
-    "cx-oracle>=8.3.0,<9",
-    "pymssql>=2.2.11,<3",
     "elasticsearch>=8.17.0,<9",
-    "redis>=5.2.1,<6",
     # document processing
     "lxml>=5.3.0,<6",
     "openpyxl>=3.1.5,<4",
     "html5lib~=1.1",
     # web
-    "fastapi>=0.115.0,<0.116",
-    "uvicorn>=0.31.0,<0.32",
     "websockify>=0.12.0,<0.13",
+    "fastapi>=0.116.1",
+    "google-auth>=2.40.3",
+    "google-auth-httplib2>=0.2.0",
+    "google-auth-oauthlib>=1.2.2",
+    "requests>=2.32.4",
+    "uvicorn>=0.35.0",
+    "bcrypt>=4.3.0", # security
+    "passlib>=1.7.4", # security
+    "python-jose>=3.5.0", # security
+    "aiosmtplib>=4.0.1", # email valication
+    "email-validator>=2.2.0", # email valication
+    "api-analytics[fastapi]>=1.2.7", # analytics monitor
+    "certifi>=2025.7.14",
     # logging and monitoring
     "python-logging-loki>=0.3.1,<0.4",
     # messaging
@@ -49,8 +66,8 @@ dependencies = [
     "ccxt>=4.5.0", # CryptoCurrency eXchange Trading Library
     "dash>=3.2.0",
     "openai>=1.107.0",
-    "python-dotenv>=1.1.1",
     "fubon-neo",
+    "pyside6>=6.9.2", # qt gui
 ]
 
 [tool.hatch.build.targets.sdist]

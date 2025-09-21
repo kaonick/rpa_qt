@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 360px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 24px;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .divider {
+            margin: 24px 0;
+            display: flex;
+            align-items: center;
+            color: #aaa;
+            font-size: 14px;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ccc;
+        }
+        .divider::before {
+            margin-right: 15px;
+        }
+        .divider::after {
+            margin-left: 15px;
+        }
+        .oauth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .oauth-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .oauth-btn:hover {
+            background-color: #f7f7f7;
+            border-color: #ccc;
+        }
+        .oauth-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .google-btn {
+            border-color: #ddd;
+        }
+        .facebook-btn {
+            background-color: #3b5998;
+            color: white;
+            border: none;
+        }
+        .facebook-btn:hover {
+            background-color: #2d4373;
+        }
+        .apple-btn {
+            background-color: black;
+            color: white;
+            border: none;
+        }
+        .apple-btn:hover {
+            background-color: #333;
+        }
+        /* Add some basic styling for error messages */
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            display: block;
+            margin-top: 5px;
+        }
+        #form-message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <h2>建立帳戶</h2>
+    <form id="signup-form" action="#" method="POST">
+        <div class="input-group">
+            <label for="email">電子郵件</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error-message" id="email-error"></span>
+        </div>
+        <div class="input-group">
+            <label for="password">密碼</label>
+            <input type="password" id="password" name="password" required>
+            <span class="error-message" id="password-error"></span>
+        </div>
+        <div class="input-group">
+            <label for="confirm-password">再次輸入密碼</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <span class="error-message" id="confirm-password-error"></span>
+        </div>
+        <button type="submit" class="btn-primary">註冊</button>
+        <p id="form-message"></p>
+    </form>
+    <div class="divider">或繼續使用</div>
+    <div class="oauth-buttons">
+        <a href="#" class="oauth-btn google-btn">
+            <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google">
+            使用 Google 註冊
+        </a>
+        <a href="#" class="oauth-btn facebook-btn">
+            <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Facebook">
+            使用 Facebook 註冊
+        </a>
+        <a href="#" class="oauth-btn apple-btn">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/mac-os.png" alt="Apple">
+            使用 Apple 註冊
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const baseUrl = window.location.origin;
+        console.log(baseUrl);  // e.g., "https://example.com" or "http://localhost:3000"
+
+        const form = document.getElementById('signup-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const formMessage = document.getElementById('form-message');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Reset previous error messages
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            formMessage.textContent = '';
+
+            let isValid = true;
+
+            // Check if email and password are empty
+            if (!emailInput.value.trim()) {
+                document.getElementById('email-error').textContent = '電子郵件不可空白';
+                isValid = false;
+            }
+            if (!passwordInput.value.trim()) {
+                document.getElementById('password-error').textContent = '密碼不可空白';
+                isValid = false;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                document.getElementById('email-error').textContent = '請輸入有效的電子郵件格式';
+                isValid = false;
+            }
+
+            // Check if passwords match
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                document.getElementById('confirm-password-error').textContent = '兩次輸入的密碼不一致';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                return; // Stop if validation fails
+            }
+
+            // All validation passed, proceed with signup
+            try {
+                // Simulate an API call to your backend
+                const response = await fetch(baseUrl+'/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: emailInput.value,
+                        password: passwordInput.value
+                    }),
+                });
+
+                if (response.ok) {
+                    // Assuming the API returns a successful response
+                    formMessage.textContent = '註冊成功，請至信箱點擊驗證連結';
+                    formMessage.style.color = 'green';
+                    // Clear the form fields after successful submission
+                    form.reset();
+                } else {
+                    // Handle API errors
+                    console.error('Signup failed:', response.status, response.body);
+
+                    const errorData = await response.json();
+                    formMessage.textContent = `註冊失敗: ${errorData.detail || '發生未知錯誤'}`;
+                    formMessage.style.color = 'red';
+                }
+            } catch (error) {
+                // Handle network or other errors
+                console.error('Signup error:', error);
+                formMessage.textContent = '註冊失敗: 無法連線至伺服器';
+                formMessage.style.color = 'red';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

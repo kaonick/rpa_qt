@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>產品管理系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .selected-row {
+            background-color: #e2e8f0; /* bg-gray-200 */
+        }
+        /* 確保 body 和 html 佔滿整個視口高度 */
+        html, body, #app-container {
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans p-8 h-screen">
+    <div id="app-container" class="container mx-auto bg-white shadow-xl rounded-lg overflow-hidden flex flex-col h-full">
+        <h1 class="text-3xl font-bold p-6 border-b border-gray-200">產品管理系統</h1>
+
+        <div class="flex flex-col md:flex-row flex-grow overflow-hidden">
+            <div class="w-full md:w-2/3 p-6 border-r border-gray-200 flex flex-col overflow-hidden">
+                <div class="mb-4 flex-shrink-0 flex items-center">
+                    <input type="text" id="searchInput" placeholder="依產品名稱搜尋..." class="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="refreshBtn" class="ml-2 bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">重新整理</button>
+                </div>
+                <div class="flex-grow overflow-y-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">產品名稱</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">價格</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">庫存</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody" class="bg-white divide-y divide-gray-200 cursor-pointer">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/3 p-6 flex flex-col overflow-y-auto">
+                <h2 id="formTitle" class="text-2xl font-semibold mb-4 flex-shrink-0">新增產品</h2>
+                <form id="productForm" class="flex-grow flex flex-col">
+                    <input type="hidden" id="productId">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 font-medium">產品名稱</label>
+                        <input type="text" id="name" name="name" required class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="price" class="block text-gray-700 font-medium">價格</label>
+                        <input type="number" id="price" name="price" step="0.01" required class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="stock" class="block text-gray-700 font-medium">庫存</label>
+                        <input type="number" id="stock" name="stock" required class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4 flex-grow">
+                        <label for="description" class="block text-gray-700 font-medium">描述</label>
+                        <textarea id="description" name="description" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-full"></textarea>
+                    </div>
+
+                    <div class="flex space-x-2 flex-shrink-0">
+                        <button type="submit" id="submitBtn" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">儲存</button>
+                        <button type="button" id="deleteBtn" class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 hidden">刪除</button>
+                        <button type="button" id="newBtn" class="bg-green-500 text-white p-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">新增</button>
+                        <button type="button" id="openProductModalBtn" class="ml-2 bg-purple-500 text-white p-2 rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500">選擇產品</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="modalBlock"></div>
+
+    <script>
+
+        const API_URL = 'http://127.0.0.1:8000/api/products';
+        const productTableBody = document.getElementById('productTableBody');
+        const productForm = document.getElementById('productForm');
+        const formTitle = document.getElementById('formTitle');
+        const productIdInput = document.getElementById('productId');
+        const nameInput = document.getElementById('name');
+        const priceInput = document.getElementById('price');
+        const stockInput = document.getElementById('stock');
+        const descriptionInput = document.getElementById('description');
+        const submitBtn = document.getElementById('submitBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const newBtn = document.getElementById('newBtn');
+        const searchInput = document.getElementById('searchInput');
+        const refreshBtn = document.getElementById('refreshBtn');
+
+        let products = [];
+        let selectedRow = null;
+        let now_id = null;
+
+        // 載入產品列表
+        async function fetchProducts(searchQuery = '') {
+            try {
+                const response = await fetch(`${API_URL}${searchQuery ? `?search=${searchQuery}` : ''}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                products = await response.json();
+                renderTable(products);
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert('無法載入產品資料，請檢查後端伺服器是否運行。');
+            }
+        }
+
+        // 渲染表格
+        function renderTable(products) {
+            productTableBody.innerHTML = '';
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-100 transition-colors duration-150';
+                row.dataset.id = product.id;
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${product.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">${product.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">$${product.price.toFixed(2)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${product.stock}</td>
+                `;
+                row.addEventListener('click', () => selectProduct(product, row));
+                productTableBody.appendChild(row);
+            });
+            // 重新選取舊的行 (如果有)
+            if (selectedRow) {
+                const newSelectedRow = productTableBody.querySelector(`[data-id='${selectedRow.dataset.id}']`);
+                if (newSelectedRow) {
+                    newSelectedRow.classList.add('selected-row');
+                    selectedRow = newSelectedRow;
+                } else {
+                    selectedRow = null;
+                }
+            }
+        }
+
+        // 選擇產品並填入表單
+        function selectProduct(product, row) {
+            if (selectedRow) {
+                selectedRow.classList.remove('selected-row');
+            }
+            selectedRow = row;
+            now_id=product.id;
+            selectedRow.classList.add('selected-row');
+
+            formTitle.textContent = '修改產品';
+            productIdInput.value = product.id;
+            nameInput.value = product.name;
+            priceInput.value = product.price;
+            stockInput.value = product.stock;
+            descriptionInput.value = product.description || '';
+
+            submitBtn.textContent = '更新';
+            deleteBtn.classList.remove('hidden');
+        }
+
+        // 清空表單並切換到新增模式
+        function resetForm() {
+            if (selectedRow) {
+                selectedRow.classList.remove('selected-row');
+                selectedRow = null;
+            }
+            formTitle.textContent = '新增產品';
+            productForm.reset();
+            productIdInput.value = '';
+            submitBtn.textContent = '儲存';
+            deleteBtn.classList.add('hidden');
+        }
+
+        // 提交表單 (新增或更新)
+        productForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const id = productIdInput.value;
+
+            now_id=id;
+
+            const product = {
+                name: nameInput.value,
+                price: parseFloat(priceInput.value),
+                stock: parseInt(stockInput.value),
+                description: descriptionInput.value
+            };
+
+            try {
+                let response;
+                if (id) { // 更新模式
+                    response = await fetch(`${API_URL}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(product),
+                    });
+                } else { // 新增模式
+                    response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(product),
+                    });
+                }
+
+                if (!response.ok) throw new Error('API request failed');
+                await fetchProducts(); // 重新載入列表
+                resetForm(); // 清空表單
+
+                // get now product by id and select it
+                if(now_id){
+                    const now_product = products.find(p => p.id == now_id);
+                    if(now_product){
+                        const row = productTableBody.querySelector(`[data-id='${now_product.id}']`);
+                        if(row){
+                            selectProduct(now_product, row);
+                        }
+                    }
+                }
+
+                alert(`產品已${id ? '更新' : '新增'}成功！`);
+            } catch (error) {
+                console.error('提交錯誤:', error);
+                alert(`無法${id ? '更新' : '新增'}產品，請稍後再試。`);
+            }
+        });
+
+        // 刪除產品
+        deleteBtn.addEventListener('click', async () => {
+            const id = productIdInput.value;
+            if (id && confirm('確定要刪除此產品嗎？')) {
+                try {
+                    const response = await fetch(`${API_URL}/${id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!response.ok) throw new Error('API request failed');
+                    await fetchProducts();
+                    resetForm();
+                    alert('產品已成功刪除！');
+                } catch (error) {
+                    console.error('刪除錯誤:', error);
+                    alert('無法刪除產品，請稍後再試。');
+                }
+            }
+        });
+
+        // "新增" 按鈕事件
+        newBtn.addEventListener('click', resetForm);
+
+        // 搜尋功能
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim();
+            fetchProducts(query);
+        });
+
+        // 重新整理按鈕事件
+        refreshBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            fetchProducts();
+        });
+
+        // 網頁載入時初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchProducts();
+        });
+
+                // 非同步載入 modal.html 內容
+        fetch('modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modalBlock').innerHTML = html;
+
+                // 載入 modal.js
+                const script = document.createElement('script');
+                script.src = 'modal.js';
+                document.body.appendChild(script);
+                console.log('Modal html and script loaded');
+            })
+            .catch(error => console.error('Error loading modal:', error));
+
+
+        // 您的主頁面邏輯
+        // 這段程式碼必須等待 DataModal 載入完成才能執行，所以建議放在這裡。
+        const openProductModalBtn = document.getElementById('openProductModalBtn');
+
+        openProductModalBtn.addEventListener('click', () => {
+            DataModal.open({
+                title: '選擇產品',
+                apiEndpoint: 'http://127.0.0.1:8000/api/lov',
+                columns: [
+                    { key: 'id', title: 'ID', sortable: true },
+                    { key: 'name', title: '產品名稱', sortable: true },
+                    { key: 'price', title: '價格', sortable: true },
+                    { key: 'stock', title: '庫存', sortable: true }
+                ],
+                callback: (selectedProducts) => {
+                    if (selectedProducts.length > 0) {
+                        const product = selectedProducts[0];
+                        document.getElementById('productId').value = product.id;
+                        document.getElementById('name').value = product.name;
+                        document.getElementById('price').value = product.price;
+                        document.getElementById('stock').value = product.stock;
+                        document.getElementById('description').value = product.description;
+                    }
+                },
+                multiSelect: false,
+                modalWidth: 'sm:max-w-4xl',
+                pageSize: 10
+            });
+        });
+
+
+    </script>
+</body>
+</html>

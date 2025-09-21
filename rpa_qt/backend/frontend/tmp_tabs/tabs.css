@@ -1,0 +1,40 @@
+#tab-bar {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.tab {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  margin-right: 5px;
+  cursor: pointer;
+  position: relative;
+  background: #eee;
+}
+
+.tab.active {
+  background: white;
+  font-weight: bold;
+}
+
+.tab-title {
+  margin-right: 8px; /* 或你想要的間距 */
+}
+
+.tab .close {
+  position: absolute;
+  right: 5px;
+  top: 2px;
+  cursor: pointer;
+  color: red;
+}
+
+#tab-content > div {
+  display: none;
+}
+
+#tab-content > div.active {
+  display: block;
+}

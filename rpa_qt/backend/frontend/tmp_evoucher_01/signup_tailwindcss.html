@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen font-sans">
+
+<div class="bg-white p-8 sm:p-10 rounded-xl shadow-lg w-full max-w-md">
+    <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">建立您的帳戶</h2>
+
+    <form id="signup-form" action="#" method="POST" class="space-y-5">
+        <div>
+            <label for="email" class="block mb-2 text-sm font-bold text-gray-600">電子郵件</label>
+            <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-200">
+            <span class="text-red-500 text-xs mt-1 block" id="email-error"></span>
+        </div>
+        <div>
+            <label for="password" class="block mb-2 text-sm font-bold text-gray-600">密碼</label>
+            <input type="password" id="password" name="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-200">
+            <span class="text-red-500 text-xs mt-1 block" id="password-error"></span>
+        </div>
+        <div>
+            <label for="confirm-password" class="block mb-2 text-sm font-bold text-gray-600">再次輸入密碼</label>
+            <input type="password" id="confirm-password" name="confirm-password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-200">
+            <span class="text-red-500 text-xs mt-1 block" id="confirm-password-error"></span>
+        </div>
+        <button type="submit" class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
+            註冊
+        </button>
+        <p id="form-message" class="text-center font-semibold mt-4"></p>
+    </form>
+
+    <div class="flex items-center my-6">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="mx-4 text-sm text-gray-400">或繼續使用</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+    </div>
+
+    <div class="space-y-3">
+        <a href="#" class="flex items-center justify-center w-full py-2.5 px-4 border border-gray-300 rounded-lg text-gray-700 font-medium text-sm hover:bg-gray-50 transition-colors duration-200">
+            <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google" class="w-5 h-5 mr-3">
+            使用 Google 註冊
+        </a>
+        <a href="#" class="flex items-center justify-center w-full py-2.5 px-4 bg-[#3b5998] text-white rounded-lg font-medium text-sm hover:bg-[#2d4373] transition-colors duration-200">
+            <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Facebook" class="w-5 h-5 mr-3 filter invert brightness-0">
+            使用 Facebook 註冊
+        </a>
+        <a href="#" class="flex items-center justify-center w-full py-2.5 px-4 bg-black text-white rounded-lg font-medium text-sm hover:bg-gray-800 transition-colors duration-200">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/mac-os.png" alt="Apple" class="w-5 h-5 mr-3">
+            使用 Apple 註冊
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const baseUrl = window.location.origin;
+        console.log(baseUrl); // e.g., "https://example.com" or "http://localhost:3000"
+
+        const form = document.getElementById('signup-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const formMessage = document.getElementById('form-message');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Reset previous error messages
+            document.querySelectorAll('.text-red-500').forEach(el => el.textContent = '');
+            formMessage.textContent = '';
+
+            let isValid = true;
+
+            // Check if email and password are empty
+            if (!emailInput.value.trim()) {
+                document.getElementById('email-error').textContent = '電子郵件不可空白';
+                isValid = false;
+            }
+            if (!passwordInput.value.trim()) {
+                document.getElementById('password-error').textContent = '密碼不可空白';
+                isValid = false;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailInput.value.trim() && !emailRegex.test(emailInput.value)) {
+                document.getElementById('email-error').textContent = '請輸入有效的電子郵件格式';
+                isValid = false;
+            }
+
+            // Check if passwords match
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                document.getElementById('confirm-password-error').textContent = '兩次輸入的密碼不一致';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                return; // Stop if validation fails
+            }
+
+            // All validation passed, proceed with signup
+            try {
+                // Simulate an API call to your backend
+                const response = await fetch(baseUrl+'/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: emailInput.value,
+                        password: passwordInput.value
+                    }),
+                });
+
+                if (response.ok) {
+                    // Assuming the API returns a successful response
+                    formMessage.textContent = '註冊成功，請至信箱點擊驗證連結';
+                    formMessage.classList.remove('text-red-600');
+                    formMessage.classList.add('text-green-600');
+                    // Clear the form fields after successful submission
+                    form.reset();
+                } else {
+                    // Handle API errors
+                    console.error('Signup failed:', response.status, response.body);
+                    const errorData = await response.json();
+                    formMessage.textContent = `註冊失敗: ${errorData.detail || '發生未知錯誤'}`;
+                    formMessage.classList.remove('text-green-600');
+                    formMessage.classList.add('text-red-600');
+                }
+            } catch (error) {
+                // Handle network or other errors
+                console.error('Signup error:', error);
+                formMessage.textContent = '註冊失敗: 無法連線至伺服器';
+                formMessage.classList.remove('text-green-600');
+                formMessage.classList.add('text-red-600');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

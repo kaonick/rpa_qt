@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>產品管理系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .selected-row {
+            background-color: #e2e8f0; /* bg-gray-200 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans p-8">
+    <div class="container mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+        <h1 class="text-3xl font-bold p-6 border-b border-gray-200">產品管理系統</h1>
+
+        <div class="flex flex-col md:flex-row">
+            <div class="w-full md:w-2/3 p-6 border-r border-gray-200">
+                <div class="mb-4 flex items-center">
+                    <input type="text" id="searchInput" placeholder="依產品名稱搜尋..." class="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="refreshBtn" class="ml-2 bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">重新整理</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        </table>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/3 p-6">
+                </div>
+        </div>
+    </div>
+
+
+    <button id="openProductModalBtn" class="ml-2 bg-purple-500 text-white p-2 rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500">選擇產品</button>
+    <div id="modalBlock"></div>  //免用
+    <script src="modal.js"></script>
+
+    <script>
+        // 您的主頁面邏輯
+
+
+        // 非同步載入 modal.html 內容
+        fetch('modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modalBlock').innerHTML = html;
+
+                // 載入 modal.js
+                const script = document.createElement('script');
+                script.src = 'modal.js';
+                document.body.appendChild(script);
+            })
+            .catch(error => console.error('Error loading modal:', error));
+
+        const openProductModalBtn = document.getElementById('openProductModalBtn');
+
+        openProductModalBtn.addEventListener('click', () => {
+            DataModal.open({
+                title: '選擇產品',
+                apiEndpoint: 'http://127.0.0.1:8000/api/products',
+                columns: [
+                    { key: 'id', title: 'ID', sortable: true },
+                    { key: 'name', title: '產品名稱', sortable: true },
+                    { key: 'price', title: '價格', sortable: true },
+                    { key: 'stock', title: '庫存', sortable: true }
+                ],
+                callback: (selectedProducts) => {
+                    if (selectedProducts.length > 0) {
+                        const product = selectedProducts[0];
+                        document.getElementById('productId').value = product.id;
+                        document.getElementById('name').value = product.name;
+                        document.getElementById('price').value = product.price;
+                        document.getElementById('stock').value = product.stock;
+                        document.getElementById('description').value = product.description;
+                    }
+                },
+                multiSelect: false,
+                modalWidth: 'sm:max-w-4xl',
+                pageSize: 10
+            });
+        });
+
+        // 以下不要用，載入異常！。
+        // 您的主頁面邏輯
+        // 這段程式碼必須等待 DataModal 載入完成才能執行，所以建議放在這裡。
+        document.addEventListener('DOMContentLoaded', () => {
+            const openProductModalBtn = document.getElementById('openProductModalBtn');
+            openProductModalBtn.addEventListener('click', () => {
+                DataModal.open({
+                    title: '選擇產品',
+                    apiEndpoint: 'http://127.0.0.1:8000/api/lov',
+                    columns: [
+                        { key: 'id', title: 'ID', sortable: true },
+                        { key: 'name', title: '產品名稱', sortable: true },
+                        { key: 'price', title: '價格', sortable: true },
+                        { key: 'stock', title: '庫存', sortable: true }
+                    ],
+                    callback: (selectedProducts) => {
+                        if (selectedProducts.length > 0) {
+                            const product = selectedProducts[0];
+                            document.getElementById('productId').value = product.id;
+                            document.getElementById('name').value = product.name;
+                            document.getElementById('price').value = product.price;
+                            document.getElementById('stock').value = product.stock;
+                            document.getElementById('description').value = product.description;
+                        }
+                    },
+                    multiSelect: false,
+                    modalWidth: 'sm:max-w-4xl',
+                    pageSize: 10
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="modalContainer"></div>
+
+    <script>
+        // 非同步載入 modal.html 內容
+        fetch('modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modalContainer').innerHTML = html;
+
+                // 載入 modal.js
+                const script = document.createElement('script');
+                script.src = 'modal.js';
+                document.body.appendChild(script);
+            })
+            .catch(error => console.error('Error loading modal:', error));
+
+        // 您的主頁面邏輯
+        // 這段程式碼必須等待 DataModal 載入完成才能執行，所以建議放在這裡。
+        document.addEventListener('DOMContentLoaded', () => {
+            const openProductModalBtn = document.getElementById('openProductModalBtn');
+            openProductModalBtn.addEventListener('click', () => {
+                // ... (您的呼叫 DataModal.open() 的邏輯) ...
+            });
+        });
+    </script>
+</body>
+</html>

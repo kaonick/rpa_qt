@@ -31,4 +31,7 @@
     * 必須是python 3.12以上版本才能安裝
 * 測試：
   * 當天測試：會不成功。要隔天才會生效。
-  * 
+
+## 主要參數對照表(constants)
+
+* https://www.fbs.com.tw/TradeAPI/docs/trading/library/python/EnumMatrix/#constants--%E6%AC%84%E4%BD%8D%E5%B0%8D%E6%87%89%E6%95%B8%E5%80%BC-

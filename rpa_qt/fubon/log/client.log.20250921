@@ -1,0 +1,34 @@
+[2025-09-21 13:43:28.672419300 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-21 13:43:28.737060700 +08:00 INFO] this account require 2fa
+[2025-09-21 13:43:28.815959200 +08:00 INFO] [future_option_mapping]: 47.9816ms
+[2025-09-21 13:43:28.844535400 +08:00 INFO] [future_option_mapping]: 26.5614ms
+[2025-09-21 13:43:28.915283800 +08:00 INFO] [future_option_mapping]: 70.4154ms
+[2025-09-21 13:43:28.953547800 +08:00 INFO] [future_option_mapping]: 30.1371ms
+[2025-09-21 21:06:08.963129500 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-21 21:06:09.004674700 +08:00 INFO] this account require 2fa
+[2025-09-21 21:06:09.101204200 +08:00 INFO] [future_option_mapping]: 65.5325ms
+[2025-09-21 21:06:09.128717700 +08:00 INFO] [future_option_mapping]: 25.333ms
+[2025-09-21 21:06:09.216499400 +08:00 INFO] [future_option_mapping]: 86.8144ms
+[2025-09-21 21:06:09.253740100 +08:00 INFO] [future_option_mapping]: 28.0989ms
+[2025-09-21 21:11:42.616687 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-21 21:11:42.660883400 +08:00 INFO] this account require 2fa
+[2025-09-21 21:11:42.840316800 +08:00 INFO] [future_option_mapping]: 133.4234ms
+[2025-09-21 21:11:42.877901300 +08:00 INFO] [future_option_mapping]: 35.2628ms
+[2025-09-21 21:11:42.995552800 +08:00 INFO] [future_option_mapping]: 117.3474ms
+[2025-09-21 21:11:43.033037900 +08:00 INFO] [future_option_mapping]: 26.3669ms
+[2025-09-21 21:12:55.386050300 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-21 21:12:55.415624700 +08:00 INFO] this account require 2fa
+[2025-09-21 21:12:55.499377100 +08:00 INFO] [future_option_mapping]: 48.383ms
+[2025-09-21 21:12:55.527814700 +08:00 INFO] [future_option_mapping]: 26.2971ms
+[2025-09-21 21:12:55.615798100 +08:00 INFO] [future_option_mapping]: 87.7137ms
+[2025-09-21 21:12:55.653861800 +08:00 INFO] [future_option_mapping]: 29.3376ms
+[2025-09-21 21:13:03.386677900 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-21 21:13:03.429857100 +08:00 INFO] [inventory_result]: 43.1366ms
+[2025-09-21 21:20:15.602038500 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-21 21:20:15.647626700 +08:00 INFO] this account require 2fa
+[2025-09-21 21:20:15.836729300 +08:00 INFO] [future_option_mapping]: 157.9952ms
+[2025-09-21 21:20:15.866457100 +08:00 INFO] [future_option_mapping]: 27.7897ms
+[2025-09-21 21:20:16.185973 +08:00 INFO] [future_option_mapping]: 319.2739ms
+[2025-09-21 21:20:16.224492700 +08:00 INFO] [future_option_mapping]: 29.9003ms
+[2025-09-21 21:20:16.225555300 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-21 21:20:16.270516700 +08:00 INFO] [inventory_stock_detail_result]: 44.9189ms

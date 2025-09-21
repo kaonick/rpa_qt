@@ -21,4 +21,14 @@ def fubon_login():
 
     accounts = sdk.login(fubon_stock_account, fubon_stock_password,fubon_stock_cert_path, fubon_stock_cert_password)   # 登入帳號 輸入:帳號、密碼、憑證路徑、憑證密碼
     print(accounts)
-    return sdk
+
+    # get active account
+    active_account=None
+    if accounts.is_success:
+        for cur_account in accounts.data:
+            # active_account=cur_account.account
+            active_account=cur_account
+            break
+
+
+    return sdk,active_account

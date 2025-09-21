@@ -4,3 +4,9 @@
 [2025-09-17 00:06:25.084229300 +08:00 INFO] [future_option_mapping]: 25.0851ms
 [2025-09-17 00:06:25.233579600 +08:00 INFO] [future_option_mapping]: 148.9639ms
 [2025-09-17 00:06:25.286190 +08:00 INFO] [future_option_mapping]: 39.7508ms
+[2025-09-17 00:07:17.492554400 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-17 00:07:17.535219900 +08:00 INFO] this account require 2fa
+[2025-09-17 00:07:17.649333700 +08:00 INFO] [future_option_mapping]: 78.1179ms
+[2025-09-17 00:07:17.678711600 +08:00 INFO] [future_option_mapping]: 27.3734ms
+[2025-09-17 00:07:17.795181300 +08:00 INFO] [future_option_mapping]: 115.3843ms
+[2025-09-17 00:07:17.832326700 +08:00 INFO] [future_option_mapping]: 27.5055ms

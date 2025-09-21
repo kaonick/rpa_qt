@@ -1,0 +1,33 @@
+2025-09-21 13:43:58.883 [MainThread] [INFO]: SDK Logger Init, sl_tp logger created
+2025-09-21 13:43:58.897 [MainThread] [INFO]: sdk init realtime...
+2025-09-21 13:43:59.932 [MainThread] [INFO]: sdk init realtime done
+2025-09-21 13:44:01.127 [MainThread] [INFO]: snapshoting tickers name finish
+2025-09-21 13:44:36.007 [MainThread] [INFO]: button start click
+2025-09-21 13:44:36.010 [MainThread] [INFO]: using default_sl -0.05 and default_tp 0.05
+2025-09-21 13:44:36.010 [MainThread] [INFO]: start monitoring
+2025-09-21 13:44:36.010 [MainThread] [INFO]: establishing quote websocket
+2025-09-21 13:44:38.448 [Thread-5 (run_forever)] [INFO]: market data connected
+2025-09-21 13:44:38.566 [MainThread] [INFO]: fetching inventories
+2025-09-21 13:44:38.686 [MainThread] [INFO]: inventories fetched and initialized done
+2025-09-21 13:45:46.138 [Thread-5 (run_forever)] [INFO]: market data disconnect: None, None
+2025-09-21 14:59:07.834 [MainThread] [INFO]: SDK Logger Init, sl_tp logger created
+2025-09-21 14:59:07.842 [MainThread] [INFO]: sdk init realtime...
+2025-09-21 14:59:08.024 [MainThread] [INFO]: sdk init realtime done
+2025-09-21 14:59:09.152 [MainThread] [INFO]: snapshoting tickers name finish
+2025-09-21 14:59:16.833 [MainThread] [INFO]: button start click
+2025-09-21 14:59:16.834 [MainThread] [INFO]: using default_sl -0.05 and default_tp 0.05
+2025-09-21 14:59:16.834 [MainThread] [INFO]: start monitoring
+2025-09-21 14:59:16.835 [MainThread] [INFO]: establishing quote websocket
+2025-09-21 14:59:17.561 [Thread-5 (run_forever)] [INFO]: market data connected
+2025-09-21 14:59:17.687 [MainThread] [INFO]: fetching inventories
+2025-09-21 14:59:17.796 [MainThread] [INFO]: inventories fetched and initialized done
+2025-09-21 20:40:19.735 [Thread-5 (run_forever)] [ERROR]: market data error: Connection to remote host was lost.
+2025-09-21 20:40:19.737 [Thread-5 (run_forever)] [INFO]: market data disconnect: None, None
+2025-09-21 20:41:40.157 [MainThread] [INFO]: button start click
+2025-09-21 20:41:40.158 [MainThread] [INFO]: using default_sl -0.05 and default_tp 0.05
+2025-09-21 20:41:40.159 [MainThread] [INFO]: start monitoring
+2025-09-21 20:41:40.174 [MainThread] [INFO]: establishing quote websocket
+2025-09-21 20:42:00.730 [MainThread] [INFO]: button start click
+2025-09-21 20:42:00.741 [MainThread] [INFO]: using default_sl -0.05 and default_tp 0.05
+2025-09-21 20:42:00.741 [MainThread] [INFO]: start monitoring
+2025-09-21 20:42:00.741 [MainThread] [INFO]: establishing quote websocket

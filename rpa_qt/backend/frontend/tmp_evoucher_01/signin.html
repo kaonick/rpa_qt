@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen font-sans p-4">
+
+<div class="bg-white p-8 sm:p-10 rounded-xl shadow-lg w-full max-w-md">
+    <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">登入您的帳戶</h2>
+
+    <form id="login-form" action="#" method="POST" class="space-y-5">
+        <div>
+            <label for="credential" class="block mb-2 text-sm font-bold text-gray-600">電子郵件 或 手機號碼</label>
+            <input type="text" id="credential" name="credential" required placeholder="請輸入您的Email或手機" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-200">
+            <span class="text-red-500 text-xs mt-1 block" id="credential-error"></span>
+        </div>
+        <div>
+            <label for="password" class="block mb-2 text-sm font-bold text-gray-600">密碼</label>
+            <input type="password" id="password" name="password" required placeholder="請輸入您的密碼" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-200">
+            <span class="text-red-500 text-xs mt-1 block" id="password-error"></span>
+        </div>
+        <div>
+            <label for="verification-code" class="block mb-2 text-sm font-bold text-gray-600">驗證碼</label>
+            <div class="flex space-x-2">
+                <input type="text" id="verification-code" name="verification-code" required placeholder="請輸入驗證碼" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-200">
+                <button type="button" id="send-code-btn" class="flex-shrink-0 px-4 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-300 text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    傳送驗證碼
+                </button>
+            </div>
+            <span class="text-red-500 text-xs mt-1 block" id="code-error"></span>
+        </div>
+        <button type="submit" class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
+            登入
+        </button>
+        <p id="form-message" class="text-center font-semibold mt-4 h-5"></p>
+    </form>
+
+    <div class="flex items-center my-6">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="mx-4 text-sm text-gray-400">或使用其他方式登入</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+        <a href="#" class="oauth-btn flex items-center justify-center w-full py-2.5 px-4 border border-gray-300 rounded-lg text-gray-700 font-medium text-sm hover:bg-gray-50 transition-colors duration-200">
+            <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google" class="w-5 h-5 mr-2">
+            Google
+        </a>
+        <a href="#" class="oauth-btn flex items-center justify-center w-full py-2.5 px-4 bg-black text-white rounded-lg font-medium text-sm hover:bg-gray-800 transition-colors duration-200">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/mac-os.png" alt="Apple" class="w-5 h-5 mr-2">
+            Apple
+        </a>
+        <a href="#" class="oauth-btn flex items-center justify-center w-full py-2.5 px-4 bg-[#3b5998] text-white rounded-lg font-medium text-sm hover:bg-[#2d4373] transition-colors duration-200">
+            <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Facebook" class="w-5 h-5 mr-2 filter invert brightness-0">
+            Facebook
+        </a>
+        <a href="#" class="oauth-btn flex items-center justify-center w-full py-2.5 px-4 bg-[#06C755] text-white rounded-lg font-medium text-sm hover:bg-[#05a546] transition-colors duration-200">
+            <img src="https://img.icons8.com/color/48/line-me.png" alt="Line" class="w-5 h-5 mr-2">
+            LINE
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const baseUrl = window.location.origin;
+
+        const form = document.getElementById('login-form');
+        const credentialInput = document.getElementById('credential');
+        const passwordInput = document.getElementById('password');
+        const codeInput = document.getElementById('verification-code');
+        const sendCodeBtn = document.getElementById('send-code-btn');
+        const formMessage = document.getElementById('form-message');
+
+        // --- Helper function to set cookies ---
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // --- Send Verification Code Logic ---
+        sendCodeBtn.addEventListener('click', async () => {
+            // Basic validation before sending code
+            const credential = credentialInput.value.trim();
+            if (!credential) {
+                document.getElementById('credential-error').textContent = '請先輸入Email或手機號碼';
+                return;
+            }
+            document.getElementById('credential-error').textContent = '';
+
+            // Disable button and start countdown
+            sendCodeBtn.disabled = true;
+            let countdown = 60;
+            sendCodeBtn.textContent = `${countdown}秒後重試`;
+
+            const interval = setInterval(() => {
+                countdown--;
+                sendCodeBtn.textContent = `${countdown}秒後重試`;
+                if (countdown <= 0) {
+                    clearInterval(interval);
+                    sendCodeBtn.disabled = false;
+                    sendCodeBtn.textContent = '傳送驗證碼';
+                }
+            }, 1000);
+
+            // Simulate API call to send verification code
+            try {
+                console.log(`向 ${credential} 傳送驗證碼...`);
+                //const response = await fetch(baseUrl + '/request_verification_code', { 'email':credential });
+
+                const response = await fetch(baseUrl+'/request_verification_code', {
+                    method: 'POST',
+                    headers: {
+                        //'Content-Type': 'application/json',
+                        'Content-Type': 'text/plain',
+                    },
+                    body: credential
+                    //body: JSON.stringify({
+                    //    email: credential
+                    //}),
+                });
+
+                if (!response.ok) throw new Error('傳送失敗');
+                console.log('驗證碼已成功(模擬)傳送');
+            } catch (error) {
+                console.error('傳送驗證碼失敗:', error);
+                // Handle error display if needed
+            }
+        });
+
+        // --- Form Submission Logic ---
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Reset previous error messages
+            document.querySelectorAll('.text-red-500').forEach(el => el.textContent = '');
+            formMessage.textContent = '';
+
+            let isValid = true;
+            const credential = credentialInput.value.trim();
+            const password = passwordInput.value.trim();
+            const code = codeInput.value.trim();
+
+            // --- Client-side validation ---
+            if (!credential) {
+                document.getElementById('credential-error').textContent = 'Email或手機不可空白';
+                isValid = false;
+            } else {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const phoneRegex = /^09\d{8}$/;
+                if (!emailRegex.test(credential) && !phoneRegex.test(credential)) {
+                    document.getElementById('credential-error').textContent = '請輸入有效的Email或手機格式';
+                    isValid = false;
+                }
+            }
+            if (!password) {
+                document.getElementById('password-error').textContent = '密碼不可空白';
+                isValid = false;
+            }
+            if (!code) {
+                document.getElementById('code-error').textContent = '驗證碼不可空白';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // --- API Call for Login ---
+            try {
+                formMessage.textContent = '登入中...';
+                formMessage.className = 'text-center font-semibold mt-4 h-5 text-gray-500';
+
+                /*
+                // Simulate an API call to your backend
+                const response = await new Promise(resolve => setTimeout(() => {
+                    // Simulate success/failure based on input
+                    if (password === 'password' && code === '123456') {
+                        resolve({
+                            ok: true,
+                            json: () => Promise.resolve({
+                                message: '登入成功',
+                                token: 'fake-jwt-token-string-for-demonstration'
+                            })
+                        });
+                    } else {
+                        resolve({
+                            ok: false,
+                            json: () => Promise.resolve({ detail: '帳號、密碼或驗證碼錯誤' })
+                        });
+                    }
+                }, 1000));
+                */
+
+                const response = await fetch(baseUrl+'/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: credential,
+                        password: password,
+                        verification_code: code
+                    }),
+                });
+
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    formMessage.textContent = '登入成功！正在跳轉...';
+                    formMessage.className = 'text-center font-semibold mt-4 h-5 text-green-600';
+
+                    // Store JWT in cookies
+                    setCookie('jwt_token', data.access_token, 7); // Store for 7 days
+                    console.log('JWT Token stored in cookies:', data.token);
+
+                    // Redirect to main page after a short delay
+                    setTimeout(() => {
+                        window.location.href = '/tmp_tailwindcss/index.html'; // Replace with your main page URL
+                        alert('登入成功，將跳轉至主頁！');
+                    }, 1500);
+
+                } else {
+                    formMessage.textContent = `登入失敗: ${data.detail || '發生未知錯誤'}`;
+                    formMessage.className = 'text-center font-semibold mt-4 h-5 text-red-600';
+                }
+            } catch (error) {
+                console.error('登入時發生錯誤:', error);
+                formMessage.textContent = '登入失敗: 無法連線至伺服器';
+                formMessage.className = 'text-center font-semibold mt-4 h-5 text-red-600';
+            }
+        });
+
+        // --- OAuth Buttons Logic ---
+        document.querySelectorAll('.oauth-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const provider = e.currentTarget.textContent.trim();
+                alert(`正在啟動 ${provider} OAuth 登入程序...`);
+                // In a real application, this would redirect to the backend OAuth endpoint
+                // window.location.href = `${baseUrl}/oauth/${provider.toLowerCase()}`;
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
