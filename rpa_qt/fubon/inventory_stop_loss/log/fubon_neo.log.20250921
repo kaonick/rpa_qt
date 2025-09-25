@@ -31,3 +31,14 @@
 2025-09-21 20:42:00.741 [MainThread] [INFO]: using default_sl -0.05 and default_tp 0.05
 2025-09-21 20:42:00.741 [MainThread] [INFO]: start monitoring
 2025-09-21 20:42:00.741 [MainThread] [INFO]: establishing quote websocket
+2025-09-21 20:42:25.598 [MainThread] [INFO]: SDK Logger Init, sl_tp logger created
+2025-09-21 20:42:25.598 [MainThread] [INFO]: sdk init realtime...
+2025-09-21 20:42:25.835 [MainThread] [INFO]: sdk init realtime done
+2025-09-21 20:42:27.065 [MainThread] [INFO]: snapshoting tickers name finish
+2025-09-21 20:42:30.266 [MainThread] [INFO]: button start click
+2025-09-21 20:42:30.266 [MainThread] [INFO]: using default_sl -0.05 and default_tp 0.05
+2025-09-21 20:42:30.266 [MainThread] [INFO]: start monitoring
+2025-09-21 20:42:30.266 [MainThread] [INFO]: establishing quote websocket
+2025-09-21 20:42:32.012 [Thread-5 (run_forever)] [INFO]: market data connected
+2025-09-21 20:42:32.060 [MainThread] [INFO]: fetching inventories
+2025-09-21 20:42:32.216 [MainThread] [INFO]: inventories fetched and initialized done

@@ -93,20 +93,25 @@ class StockRecord(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)  # 主鍵，自動增量
 
-    order_code: Mapped[str] = mapped_column(String(8), nullable=False, default=get_now_day)  # 單號，預設 get_now_day()，yyyymmdd，不可空白
+    order_code: Mapped[str] = mapped_column(String(20), nullable=False, default=get_now_day)  # 單號，預設 get_now_day()，yyyymmdd，不可空白
 
     symbol: Mapped[str] = mapped_column(String(20), nullable=False)  # 股票代號，不可空白
     name: Mapped[str] = mapped_column(String(50), nullable=False)  # 股票名稱，不可空白
 
-    init_buy_date: Mapped[str] = mapped_column(String(8), nullable=False)  # 初始買進日，yyyymmdd，不可空白
+    init_buy_date: Mapped[str] = mapped_column(String(20), nullable=False)  # 初始買進日，yyyymmdd，不可空白
     quantity: Mapped[float] = mapped_column(Float, nullable=False)  # 張數，float，不可空白
     avg_cost_price: Mapped[float] = mapped_column(Float, nullable=False)  # 成本均價，float，不可空白
     current_price: Mapped[float] = mapped_column(Float, nullable=False)  # 現價，float，不可空白
     highest_price: Mapped[float] = mapped_column(Float, nullable=False)  # 買進後最高價，float，不可空白
+
+    buy_fee: Mapped[float] = mapped_column(Float, nullable=False)  # 買進手續費，float，不可空白
+    sell_fee: Mapped[float] = mapped_column(Float, nullable=False)  # 賣出手續費，float，不可空白
+
     profit_rate: Mapped[float] = mapped_column(Float, nullable=False)  # 損益率，float，不可空白
     stop_loss_rate: Mapped[float] = mapped_column(Float, nullable=False)  # 停損標準，float，不可空白
     take_profit_rate: Mapped[float] = mapped_column(Float, nullable=False)  # 停利標準，float，不可空白
     stop_loss_price: Mapped[float] = mapped_column(Float, nullable=False)  # 停損價格，float，不可空白
+    take_profit_begin_price : Mapped[float] = mapped_column(Float, nullable=False)  # 停利起算價格，float，不可空白
     take_profit_price: Mapped[float] = mapped_column(Float, nullable=False)  # 停利價格，float，不可空白
     fallback_rate: Mapped[float] = mapped_column(Float, nullable=False)  # 回跌率，float，不可空白
 
@@ -122,7 +127,7 @@ class StockRecord(Base):
         nullable=True
     )  # 應採策略：觀望、停利、停損、第一次加碼、第二次加碼、逾時賣出，可空白
 
-    settlement_date: Mapped[str | None] = mapped_column(String(8), nullable=True)  # 結算日期，yyyymmdd，可空白
+    settlement_date: Mapped[str | None] = mapped_column(String(20), nullable=True)  # 結算日期，yyyymmdd，可空白
     total_cost: Mapped[float] = mapped_column(Float, nullable=False)  # 成本總額，float，不可空白
     profit_amount: Mapped[float | None] = mapped_column(Float, nullable=True)  # 損益金額，float，可空白
     final_profit_rate: Mapped[float | None] = mapped_column(Float, nullable=True)  # 損益率，float，可空白

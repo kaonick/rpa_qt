@@ -44,7 +44,7 @@ PIVOT_NEIGHBOR = 1         # 判定區域極值時的鄰近比較天數（1=嚴�
 # PIVOT_NEIGHBOR = 1         # 判定區域極值時的鄰近比較天數（1=嚴格相鄰）
 
 
-def load_universe() -> List[str]:
+def load_universe() -> Tuple[List[str],List[str]]:
     """
     優先嘗試讀取 tw_tickers.txt（每行一個數字代碼，例如 2330）
     若無，使用預設小清單（示範用）。
@@ -67,15 +67,18 @@ def load_universe() -> List[str]:
     ]
     # project path
     project_root = ROOT_DIR
-    symbol_path = project_root+"/price_utils/tw_tickers_detailed.csv"
+    # symbol_path = project_root+"/price_utils/tw_tickers_detailed.csv" #全部股票都找
+    symbol_path = project_root+"/price_utils/tw_tickers_big_volume.csv" #只找大成交量股票
+
     symbols_df=csv_to_df(symbol_path)
     # get 'symbol' column as list
     if 'symbol' in symbols_df.columns:
         items = symbols_df['symbol'].astype(str).str.strip().tolist()
+        names = symbols_df['name'].astype(str).str.strip().tolist()
         # 僅保留數字
         items = [s for s in items if s.isdigit()]
         if items:
-            return items
+            return items,names
 
 
     path = "tw_tickers.txt"
@@ -85,8 +88,8 @@ def load_universe() -> List[str]:
         # 僅保留數字
         items = [s for s in items if s.isdigit()]
         if items:
-            return items
-    return default_list
+            return items,[]
+    return default_list,[]
 
 
 def try_download_symbol(numeric_code: str) -> Tuple[str, Optional[pd.DataFrame], Optional[str]]:
@@ -240,6 +243,7 @@ def scan_symbol(numeric_code: str, n_pct: float = N_PCT, min_rebound: float = MI
     dates = df.index
     return {
         "symbol": ysym,
+        # "name": ,
         "exchange": exch,
         "A_date": dates[ia].date(),
         "B_date": dates[ib].date(),
@@ -257,12 +261,20 @@ def scan_symbol(numeric_code: str, n_pct: float = N_PCT, min_rebound: float = MI
 
 
 def run_scan():
-    universe = load_universe()
+    universe,names = load_universe()
     results = []
-    for code in universe:
+    for i,code in enumerate(universe):
         try:
             row = scan_symbol(code, n_pct=N_PCT, min_rebound=MIN_REBOUND, neighbor=PIVOT_NEIGHBOR)
             if row:
+                # row add symbol name
+                if names and i < len(names):
+                    row["name"] = names[i]
+                else:
+                    row["name"] = ""
+
+
+
                 results.append(row)
         except Exception as e:
             # 不中斷，繼續掃描其他股票
@@ -272,12 +284,12 @@ def run_scan():
     if results:
         out_df = pd.DataFrame(results)[
             ["symbol", "exchange", "buy_high", "buy_low", "drop_pct", "stop_loss",
-             "A_date", "B_date", "C_date", "A", "B", "C", "last_close"]
+             "A_date", "B_date", "C_date", "A", "B", "C", "last_close", "name"]
         ].sort_values(["exchange", "symbol"]).reset_index(drop=True)
     else:
         out_df = pd.DataFrame(columns=[
             "symbol", "exchange", "buy_high", "buy_low", "drop_pct", "stop_loss",
-            "A_date", "B_date", "C_date", "A", "B", "C", "last_close"
+            "A_date", "B_date", "C_date", "A", "B", "C", "last_close", "name"
         ])
 
     save_path = "rebound_candidates.csv"

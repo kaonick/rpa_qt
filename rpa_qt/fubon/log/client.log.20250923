@@ -1,0 +1,13 @@
+[2025-09-23 23:52:02.381629500 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-23 23:52:02.488853600 +08:00 INFO] this account require 2fa
+[2025-09-23 23:52:02.692575900 +08:00 INFO] [future_option_mapping]: 172.2711ms
+[2025-09-23 23:52:02.721096800 +08:00 INFO] [future_option_mapping]: 26.4623ms
+[2025-09-23 23:52:02.952100100 +08:00 INFO] [future_option_mapping]: 230.6951ms
+[2025-09-23 23:52:03.106628400 +08:00 INFO] [future_option_mapping]: 145.9867ms
+[2025-09-23 23:52:27.244957100 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-23 23:52:27.285266500 +08:00 INFO] this account require 2fa
+[2025-09-23 23:52:27.380237300 +08:00 INFO] [future_option_mapping]: 64.0606ms
+[2025-09-23 23:52:27.408102100 +08:00 INFO] [future_option_mapping]: 25.7581ms
+[2025-09-23 23:52:27.528102300 +08:00 INFO] [future_option_mapping]: 119.1896ms
+[2025-09-23 23:52:27.562159700 +08:00 INFO] [future_option_mapping]: 22.0295ms
+[2025-09-23 23:52:27.868555800 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None

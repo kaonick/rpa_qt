@@ -26,8 +26,25 @@ from api_analytics.fastapi import Analytics
 #     async with engine.begin() as conn:
 #         await conn.run_sync(models.Base.metadata.create_all)
 
+# ---------- Lifespan: create tables on startup (for demo) ----------
+# @app.on_event("startup")
+# async def on_startup():
+#     # create DB tables if not exist (for demo). In prod use migrations (alembic).
+#     async with adbPool.get_engine().begin() as conn:
+#         await conn.run_sync(models.Base.metadata.create_all)
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("...app startup...")
+    # create DB tables if not exist (for demo). In prod use migrations (alembic).
+    async with adbPool.get_engine().begin() as conn:
+        await conn.run_sync(models.Base.metadata.create_all)
+
+    yield
+    print("...app shutdown...")
+# -------------------------------------------------------------------
+
+app = FastAPI(lifespan=lifespan)
 key="c91d6234-6927-4035-a25b-066a6965e7f0" #https://www.apianalytics.dev/generate
 app.add_middleware(Analytics, api_key=key)
 
@@ -49,18 +66,7 @@ app.add_middleware(
 
 
 
-# ---------- Lifespan: create tables on startup (for demo) ----------
-# @app.on_event("startup")
-# async def on_startup():
-#     # create DB tables if not exist (for demo). In prod use migrations (alembic).
-#     async with adbPool.get_engine().begin() as conn:
-#         await conn.run_sync(models.Base.metadata.create_all)
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # create DB tables if not exist (for demo). In prod use migrations (alembic).
-    async with adbPool.get_engine().begin() as conn:
-        await conn.run_sync(models.Base.metadata.create_all)
 
 
 # 全域例外處理

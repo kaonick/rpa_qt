@@ -1,0 +1,337 @@
+[2025-09-25 21:47:17.033116 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 21:47:17.067938 +08:00 INFO] this account require 2fa
+[2025-09-25 21:47:17.147541700 +08:00 INFO] [future_option_mapping]: 49.2054ms
+[2025-09-25 21:47:17.173950100 +08:00 INFO] [future_option_mapping]: 24.5063ms
+[2025-09-25 21:47:17.260789100 +08:00 INFO] [future_option_mapping]: 86.5637ms
+[2025-09-25 21:47:17.312720700 +08:00 INFO] [future_option_mapping]: 41.0783ms
+[2025-09-25 21:47:20.228912100 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:47:20.255538500 +08:00 INFO] [inventory_result]: 26.5323ms
+[2025-09-25 21:47:31.194859600 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:47:31.233295200 +08:00 INFO] [inventory_result]: 37.7641ms
+[2025-09-25 21:47:50.883435500 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:47:50.932221900 +08:00 INFO] [inventory_stock_detail_result]: 48.7086ms
+[2025-09-25 21:47:51.740176300 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 21:51:42.679763700 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 21:51:42.726353500 +08:00 INFO] this account require 2fa
+[2025-09-25 21:51:42.821926400 +08:00 INFO] [future_option_mapping]: 64.7769ms
+[2025-09-25 21:51:42.848778900 +08:00 INFO] [future_option_mapping]: 24.8975ms
+[2025-09-25 21:51:42.952042300 +08:00 INFO] [future_option_mapping]: 102.9382ms
+[2025-09-25 21:51:43.002422 +08:00 INFO] [future_option_mapping]: 40.6492ms
+[2025-09-25 21:51:46.601836600 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:51:46.646323200 +08:00 INFO] [inventory_result]: 44.3663ms
+[2025-09-25 21:51:46.646845400 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:51:46.677886800 +08:00 INFO] [inventory_result]: 30.9951ms
+[2025-09-25 21:51:47.863831100 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:51:47.921537200 +08:00 INFO] [inventory_stock_detail_result]: 57.6343ms
+[2025-09-25 21:51:47.921925200 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 21:52:44.129340600 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 21:52:44.165731200 +08:00 INFO] this account require 2fa
+[2025-09-25 21:52:44.261127200 +08:00 INFO] [future_option_mapping]: 64.3359ms
+[2025-09-25 21:52:44.288643 +08:00 INFO] [future_option_mapping]: 25.4735ms
+[2025-09-25 21:52:44.390341900 +08:00 INFO] [future_option_mapping]: 101.3985ms
+[2025-09-25 21:52:44.427400100 +08:00 INFO] [future_option_mapping]: 28.1026ms
+[2025-09-25 21:52:47.906330400 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:52:47.934587 +08:00 INFO] [inventory_result]: 28.1871ms
+[2025-09-25 21:52:47.935049800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:52:47.965230500 +08:00 INFO] [inventory_result]: 30.1152ms
+[2025-09-25 21:52:49.143824700 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:52:49.187168100 +08:00 INFO] [inventory_stock_detail_result]: 43.2912ms
+[2025-09-25 21:52:49.187566700 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 21:54:56.835758700 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 21:54:56.864663400 +08:00 INFO] this account require 2fa
+[2025-09-25 21:54:56.974407 +08:00 INFO] [future_option_mapping]: 79.5836ms
+[2025-09-25 21:54:57.002066900 +08:00 INFO] [future_option_mapping]: 25.4541ms
+[2025-09-25 21:54:57.103384500 +08:00 INFO] [future_option_mapping]: 101.0441ms
+[2025-09-25 21:54:57.139505200 +08:00 INFO] [future_option_mapping]: 26.3276ms
+[2025-09-25 21:54:58.096255 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:54:58.124166400 +08:00 INFO] [inventory_result]: 27.8651ms
+[2025-09-25 21:54:58.124447800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:54:58.154576700 +08:00 INFO] [inventory_result]: 30.0464ms
+[2025-09-25 21:54:59.357583800 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 21:54:59.396064 +08:00 INFO] [inventory_stock_detail_result]: 38.4217ms
+[2025-09-25 21:54:59.396459400 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:04:08.090488900 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:04:08.118802 +08:00 INFO] this account require 2fa
+[2025-09-25 22:04:08.213858800 +08:00 INFO] [future_option_mapping]: 64.787ms
+[2025-09-25 22:04:08.241926300 +08:00 INFO] [future_option_mapping]: 25.7795ms
+[2025-09-25 22:04:08.344744200 +08:00 INFO] [future_option_mapping]: 102.5052ms
+[2025-09-25 22:04:08.396892500 +08:00 INFO] [future_option_mapping]: 42.1562ms
+[2025-09-25 22:04:08.650591200 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:04:08.672406100 +08:00 INFO] [inventory_result]: 21.7624ms
+[2025-09-25 22:04:08.672781500 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:04:08.705654400 +08:00 INFO] [inventory_result]: 32.8348ms
+[2025-09-25 22:04:10.224002300 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:04:10.266228 +08:00 INFO] [inventory_stock_detail_result]: 42.0703ms
+[2025-09-25 22:04:10.267274600 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:06:13.809208800 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:06:13.853320700 +08:00 INFO] this account require 2fa
+[2025-09-25 22:06:13.948989400 +08:00 INFO] [future_option_mapping]: 63.7824ms
+[2025-09-25 22:06:13.977726800 +08:00 INFO] [future_option_mapping]: 26.9711ms
+[2025-09-25 22:06:14.067136100 +08:00 INFO] [future_option_mapping]: 89.1308ms
+[2025-09-25 22:06:14.101302900 +08:00 INFO] [future_option_mapping]: 24.6353ms
+[2025-09-25 22:06:14.243396500 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:06:14.269363200 +08:00 INFO] [inventory_result]: 25.9234ms
+[2025-09-25 22:06:14.269610500 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:06:14.300090700 +08:00 INFO] [inventory_result]: 30.4203ms
+[2025-09-25 22:06:15.438433600 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:06:15.491337 +08:00 INFO] [inventory_stock_detail_result]: 52.8522ms
+[2025-09-25 22:06:15.491858800 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:06:53.164904300 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:06:53.204470500 +08:00 INFO] this account require 2fa
+[2025-09-25 22:06:53.298646 +08:00 INFO] [future_option_mapping]: 63.5325ms
+[2025-09-25 22:06:53.327697800 +08:00 INFO] [future_option_mapping]: 27.1489ms
+[2025-09-25 22:06:53.429757700 +08:00 INFO] [future_option_mapping]: 101.8032ms
+[2025-09-25 22:06:53.466474500 +08:00 INFO] [future_option_mapping]: 28.5853ms
+[2025-09-25 22:06:53.663457600 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:06:53.682569200 +08:00 INFO] [inventory_result]: 19.0688ms
+[2025-09-25 22:06:53.682832300 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:06:53.713095100 +08:00 INFO] [inventory_result]: 30.2228ms
+[2025-09-25 22:06:54.781999 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:06:54.820192500 +08:00 INFO] [inventory_stock_detail_result]: 38.1376ms
+[2025-09-25 22:06:54.820476300 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:10:28.700451300 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:10:28.743465600 +08:00 INFO] this account require 2fa
+[2025-09-25 22:10:28.837798400 +08:00 INFO] [future_option_mapping]: 63.4815ms
+[2025-09-25 22:10:28.866277800 +08:00 INFO] [future_option_mapping]: 26.7266ms
+[2025-09-25 22:10:28.966692400 +08:00 INFO] [future_option_mapping]: 100.1536ms
+[2025-09-25 22:10:29.004746 +08:00 INFO] [future_option_mapping]: 29.5211ms
+[2025-09-25 22:10:29.175676800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:10:29.207539600 +08:00 INFO] [inventory_result]: 31.7935ms
+[2025-09-25 22:10:29.207882100 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:10:29.237900300 +08:00 INFO] [inventory_result]: 29.9626ms
+[2025-09-25 22:10:30.379209500 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:10:30.422488800 +08:00 INFO] [inventory_stock_detail_result]: 43.2171ms
+[2025-09-25 22:10:30.422796500 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:11:14.227632400 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:11:14.266048800 +08:00 INFO] this account require 2fa
+[2025-09-25 22:11:14.361301200 +08:00 INFO] [future_option_mapping]: 64.5639ms
+[2025-09-25 22:11:14.388995800 +08:00 INFO] [future_option_mapping]: 24.6788ms
+[2025-09-25 22:11:14.489704400 +08:00 INFO] [future_option_mapping]: 100.4226ms
+[2025-09-25 22:11:14.573408100 +08:00 INFO] [future_option_mapping]: 74.5566ms
+[2025-09-25 22:11:14.703873600 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:11:14.727023700 +08:00 INFO] [inventory_result]: 23.1027ms
+[2025-09-25 22:11:14.727288400 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:11:14.758147200 +08:00 INFO] [inventory_result]: 30.8018ms
+[2025-09-25 22:11:15.831858300 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:11:15.883997100 +08:00 INFO] [inventory_stock_detail_result]: 51.8759ms
+[2025-09-25 22:11:15.884269900 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:15:36.096595800 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:15:36.127268900 +08:00 INFO] this account require 2fa
+[2025-09-25 22:15:36.221491900 +08:00 INFO] [future_option_mapping]: 63.6578ms
+[2025-09-25 22:15:36.250079800 +08:00 INFO] [future_option_mapping]: 26.2809ms
+[2025-09-25 22:15:36.336300500 +08:00 INFO] [future_option_mapping]: 85.6761ms
+[2025-09-25 22:15:36.373401200 +08:00 INFO] [future_option_mapping]: 27.3677ms
+[2025-09-25 22:15:36.574551900 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:15:36.618545300 +08:00 INFO] [inventory_result]: 43.8981ms
+[2025-09-25 22:15:36.619672100 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:15:36.648706900 +08:00 INFO] [inventory_result]: 28.9605ms
+[2025-09-25 22:15:37.873762900 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:15:37.915332100 +08:00 INFO] [inventory_stock_detail_result]: 41.4569ms
+[2025-09-25 22:15:37.915807500 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:16:04.425393800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:16:04.468068 +08:00 INFO] [inventory_result]: 42.5994ms
+[2025-09-25 22:16:04.468632900 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:16:04.498226300 +08:00 INFO] [inventory_result]: 29.4818ms
+[2025-09-25 22:16:05.643468300 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:16:05.703858800 +08:00 INFO] [inventory_stock_detail_result]: 60.3335ms
+[2025-09-25 22:16:05.704388500 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:21:25.197581900 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:21:25.229562100 +08:00 INFO] this account require 2fa
+[2025-09-25 22:21:25.325845100 +08:00 INFO] [future_option_mapping]: 65.0681ms
+[2025-09-25 22:21:25.354259600 +08:00 INFO] [future_option_mapping]: 26.6098ms
+[2025-09-25 22:21:25.456279600 +08:00 INFO] [future_option_mapping]: 101.7305ms
+[2025-09-25 22:21:25.493507700 +08:00 INFO] [future_option_mapping]: 29.3684ms
+[2025-09-25 22:21:25.687545500 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:21:25.715741 +08:00 INFO] [inventory_result]: 28.1118ms
+[2025-09-25 22:21:25.716145900 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:21:25.747386900 +08:00 INFO] [inventory_result]: 31.1317ms
+[2025-09-25 22:21:26.851701100 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:21:26.897807100 +08:00 INFO] [inventory_stock_detail_result]: 46.0512ms
+[2025-09-25 22:21:26.898229700 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:21:31.236576700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:21:31.263418400 +08:00 INFO] [inventory_result]: 26.7956ms
+[2025-09-25 22:21:31.264271700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:21:31.294299800 +08:00 INFO] [inventory_result]: 29.9694ms
+[2025-09-25 22:21:33.463747700 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:21:33.516353800 +08:00 INFO] [inventory_stock_detail_result]: 52.5511ms
+[2025-09-25 22:21:33.516760400 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:25:51.641423600 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:25:51.678194900 +08:00 INFO] this account require 2fa
+[2025-09-25 22:25:51.773423700 +08:00 INFO] [future_option_mapping]: 64.3999ms
+[2025-09-25 22:25:51.800897500 +08:00 INFO] [future_option_mapping]: 25.7412ms
+[2025-09-25 22:25:51.901536900 +08:00 INFO] [future_option_mapping]: 100.3921ms
+[2025-09-25 22:25:51.939488700 +08:00 INFO] [future_option_mapping]: 29.9189ms
+[2025-09-25 22:25:52.153593 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:25:52.178920700 +08:00 INFO] [inventory_result]: 25.1833ms
+[2025-09-25 22:25:52.179245800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:25:52.209345100 +08:00 INFO] [inventory_result]: 30.0313ms
+[2025-09-25 22:25:53.274759700 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:25:53.325109900 +08:00 INFO] [inventory_stock_detail_result]: 50.305ms
+[2025-09-25 22:25:53.325380700 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:25:58.906179200 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:25:58.945254 +08:00 INFO] [inventory_result]: 39.0245ms
+[2025-09-25 22:25:58.945720500 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:25:58.976059800 +08:00 INFO] [inventory_result]: 30.2893ms
+[2025-09-25 22:26:00.274383 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:26:00.331403100 +08:00 INFO] [inventory_stock_detail_result]: 56.9234ms
+[2025-09-25 22:26:00.331793100 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:31:00.943931400 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:31:00.974545400 +08:00 INFO] this account require 2fa
+[2025-09-25 22:31:01.069146700 +08:00 INFO] [future_option_mapping]: 63.6363ms
+[2025-09-25 22:31:01.097520800 +08:00 INFO] [future_option_mapping]: 26.5779ms
+[2025-09-25 22:31:01.217532100 +08:00 INFO] [future_option_mapping]: 119.671ms
+[2025-09-25 22:31:01.376227 +08:00 INFO] [future_option_mapping]: 148.8912ms
+[2025-09-25 22:31:01.626612900 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:31:01.712026400 +08:00 INFO] [inventory_result]: 85.3701ms
+[2025-09-25 22:31:01.712285700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:31:01.835781300 +08:00 INFO] [inventory_result]: 123.4382ms
+[2025-09-25 22:31:03.051237800 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:31:03.104065300 +08:00 INFO] [inventory_stock_detail_result]: 52.7567ms
+[2025-09-25 22:31:03.104390500 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:31:03.276954700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:31:03.308826600 +08:00 INFO] [inventory_result]: 31.7752ms
+[2025-09-25 22:31:03.309228900 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:31:03.339556100 +08:00 INFO] [inventory_result]: 30.2308ms
+[2025-09-25 22:31:04.368638700 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:31:04.411602200 +08:00 INFO] [inventory_stock_detail_result]: 42.9251ms
+[2025-09-25 22:31:04.412026600 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:35:54.455669100 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:35:54.492602700 +08:00 INFO] this account require 2fa
+[2025-09-25 22:35:54.587483600 +08:00 INFO] [future_option_mapping]: 64.0716ms
+[2025-09-25 22:35:54.616976900 +08:00 INFO] [future_option_mapping]: 27.7129ms
+[2025-09-25 22:35:54.718458300 +08:00 INFO] [future_option_mapping]: 101.2486ms
+[2025-09-25 22:35:54.771391100 +08:00 INFO] [future_option_mapping]: 45.1927ms
+[2025-09-25 22:35:55.030669500 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:35:55.066331500 +08:00 INFO] [inventory_result]: 35.6206ms
+[2025-09-25 22:35:55.066585700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:35:55.097237100 +08:00 INFO] [inventory_result]: 30.5966ms
+[2025-09-25 22:35:56.206951600 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:35:56.253188200 +08:00 INFO] [inventory_stock_detail_result]: 46.1801ms
+[2025-09-25 22:35:56.253739700 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:35:56.429347800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:35:56.456812600 +08:00 INFO] [inventory_result]: 27.4145ms
+[2025-09-25 22:35:56.457051600 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:35:56.487262300 +08:00 INFO] [inventory_result]: 30.1442ms
+[2025-09-25 22:35:57.528133900 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:35:57.564929500 +08:00 INFO] [inventory_stock_detail_result]: 36.5608ms
+[2025-09-25 22:35:57.565152600 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:49:48.002996300 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:49:48.040849200 +08:00 INFO] this account require 2fa
+[2025-09-25 22:49:48.137142600 +08:00 INFO] [future_option_mapping]: 65.0952ms
+[2025-09-25 22:49:48.163961300 +08:00 INFO] [future_option_mapping]: 23.5341ms
+[2025-09-25 22:49:48.249289300 +08:00 INFO] [future_option_mapping]: 85.0302ms
+[2025-09-25 22:49:48.288133500 +08:00 INFO] [future_option_mapping]: 30.8977ms
+[2025-09-25 22:49:48.568814300 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:49:48.588832 +08:00 INFO] [inventory_result]: 19.9722ms
+[2025-09-25 22:49:48.589203300 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:49:48.619610100 +08:00 INFO] [inventory_result]: 30.3402ms
+[2025-09-25 22:49:49.773811 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:49:49.820890200 +08:00 INFO] [inventory_stock_detail_result]: 47.0206ms
+[2025-09-25 22:49:49.821323700 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:49:50.004073500 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:49:50.039775600 +08:00 INFO] [inventory_result]: 35.5805ms
+[2025-09-25 22:49:50.040148 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:49:50.070555100 +08:00 INFO] [inventory_result]: 30.3442ms
+[2025-09-25 22:49:51.343223900 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:49:51.390151600 +08:00 INFO] [inventory_stock_detail_result]: 46.8491ms
+[2025-09-25 22:49:51.390712600 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:50:17.471003600 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:50:17.517085200 +08:00 INFO] this account require 2fa
+[2025-09-25 22:50:17.627754100 +08:00 INFO] [future_option_mapping]: 79.8476ms
+[2025-09-25 22:50:17.656022800 +08:00 INFO] [future_option_mapping]: 26.4036ms
+[2025-09-25 22:50:17.887855900 +08:00 INFO] [future_option_mapping]: 231.5559ms
+[2025-09-25 22:50:17.931945800 +08:00 INFO] [future_option_mapping]: 35.8878ms
+[2025-09-25 22:50:18.182628700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:50:18.212970700 +08:00 INFO] [inventory_result]: 30.2999ms
+[2025-09-25 22:50:18.213221700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:50:18.243498600 +08:00 INFO] [inventory_result]: 30.2236ms
+[2025-09-25 22:50:19.315588400 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:50:19.359151600 +08:00 INFO] [inventory_stock_detail_result]: 43.496ms
+[2025-09-25 22:50:19.359436700 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:50:19.509441500 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:50:19.546064300 +08:00 INFO] [inventory_result]: 36.5635ms
+[2025-09-25 22:50:19.546254600 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:50:19.576629200 +08:00 INFO] [inventory_result]: 30.297ms
+[2025-09-25 22:50:20.593304100 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:50:20.631356600 +08:00 INFO] [inventory_stock_detail_result]: 37.9091ms
+[2025-09-25 22:50:20.631799500 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:51:36.320642 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:51:36.363726800 +08:00 INFO] this account require 2fa
+[2025-09-25 22:51:36.457921500 +08:00 INFO] [future_option_mapping]: 63.6165ms
+[2025-09-25 22:51:36.485890600 +08:00 INFO] [future_option_mapping]: 26.091ms
+[2025-09-25 22:51:36.602501500 +08:00 INFO] [future_option_mapping]: 116.3336ms
+[2025-09-25 22:51:36.638784200 +08:00 INFO] [future_option_mapping]: 27.0496ms
+[2025-09-25 22:51:36.868200900 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:51:36.901668200 +08:00 INFO] [inventory_result]: 33.4077ms
+[2025-09-25 22:51:36.902144700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:51:36.932402300 +08:00 INFO] [inventory_result]: 30.1978ms
+[2025-09-25 22:51:37.983872200 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:51:38.045602500 +08:00 INFO] [inventory_stock_detail_result]: 61.6774ms
+[2025-09-25 22:51:38.045936600 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:51:38.245169800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:51:38.275183800 +08:00 INFO] [inventory_result]: 29.9727ms
+[2025-09-25 22:51:38.275415100 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:51:38.305697900 +08:00 INFO] [inventory_result]: 30.2382ms
+[2025-09-25 22:51:39.396357900 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:51:39.452726500 +08:00 INFO] [inventory_stock_detail_result]: 56.3084ms
+[2025-09-25 22:51:39.453124800 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:53:15.236065700 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:53:15.267711400 +08:00 INFO] this account require 2fa
+[2025-09-25 22:53:15.362093 +08:00 INFO] [future_option_mapping]: 63.261ms
+[2025-09-25 22:53:15.391223 +08:00 INFO] [future_option_mapping]: 27.3173ms
+[2025-09-25 22:53:15.476273 +08:00 INFO] [future_option_mapping]: 84.7978ms
+[2025-09-25 22:53:15.514979 +08:00 INFO] [future_option_mapping]: 30.5237ms
+[2025-09-25 22:53:15.747438300 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:53:15.797231300 +08:00 INFO] [inventory_result]: 49.7293ms
+[2025-09-25 22:53:15.797517100 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:53:15.828110200 +08:00 INFO] [inventory_result]: 30.5343ms
+[2025-09-25 22:53:16.956586300 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:53:16.995222800 +08:00 INFO] [inventory_stock_detail_result]: 38.577ms
+[2025-09-25 22:53:16.995785 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:53:17.159556200 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:53:17.195946600 +08:00 INFO] [inventory_result]: 36.2872ms
+[2025-09-25 22:53:17.196307600 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:53:17.227160700 +08:00 INFO] [inventory_result]: 30.7829ms
+[2025-09-25 22:53:18.245039500 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:53:18.280295600 +08:00 INFO] [inventory_stock_detail_result]: 35.2108ms
+[2025-09-25 22:53:18.280464600 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:54:29.547014200 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:54:29.586392400 +08:00 INFO] this account require 2fa
+[2025-09-25 22:54:29.681634300 +08:00 INFO] [future_option_mapping]: 63.5026ms
+[2025-09-25 22:54:29.709334 +08:00 INFO] [future_option_mapping]: 25.7882ms
+[2025-09-25 22:54:29.793752400 +08:00 INFO] [future_option_mapping]: 84.1763ms
+[2025-09-25 22:54:29.831747400 +08:00 INFO] [future_option_mapping]: 30.0007ms
+[2025-09-25 22:54:30.022496600 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:54:30.048085500 +08:00 INFO] [inventory_result]: 25.5455ms
+[2025-09-25 22:54:30.048373800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:54:30.078688 +08:00 INFO] [inventory_result]: 30.2752ms
+[2025-09-25 22:54:31.112890900 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:54:31.152053500 +08:00 INFO] [inventory_stock_detail_result]: 39.1115ms
+[2025-09-25 22:54:31.152483600 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:54:31.347026 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:54:31.384193100 +08:00 INFO] [inventory_result]: 37.0875ms
+[2025-09-25 22:54:31.384563400 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:54:31.415379900 +08:00 INFO] [inventory_result]: 30.7753ms
+[2025-09-25 22:54:32.568343200 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:54:32.616498100 +08:00 INFO] [inventory_stock_detail_result]: 48.1112ms
+[2025-09-25 22:54:32.616797700 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:55:47.403600500 +08:00 INFO] [login] personal_id="A220139443"
+[2025-09-25 22:55:47.451192700 +08:00 INFO] this account require 2fa
+[2025-09-25 22:55:47.529476500 +08:00 INFO] [future_option_mapping]: 48.7587ms
+[2025-09-25 22:55:47.557323900 +08:00 INFO] [future_option_mapping]: 26.1891ms
+[2025-09-25 22:55:47.643127800 +08:00 INFO] [future_option_mapping]: 85.5713ms
+[2025-09-25 22:55:47.680775200 +08:00 INFO] [future_option_mapping]: 29.3395ms
+[2025-09-25 22:55:47.804542100 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:55:47.835677200 +08:00 INFO] [inventory_result]: 31.0924ms
+[2025-09-25 22:55:47.835945200 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:55:47.866651200 +08:00 INFO] [inventory_result]: 30.6656ms
+[2025-09-25 22:55:48.879184100 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:55:48.932691200 +08:00 INFO] [inventory_stock_detail_result]: 53.4453ms
+[2025-09-25 22:55:48.933191 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
+[2025-09-25 22:55:49.110999800 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:55:49.147531400 +08:00 INFO] [inventory_result]: 36.4847ms
+[2025-09-25 22:55:49.147767700 +08:00 INFO] [get inventories] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:55:49.177955200 +08:00 INFO] [inventory_result]: 30.1459ms
+[2025-09-25 22:55:50.266188700 +08:00 INFO] [unrealized gains and loses] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }
+[2025-09-25 22:55:50.314799400 +08:00 INFO] [inventory_stock_detail_result]: 48.4606ms
+[2025-09-25 22:55:50.315291400 +08:00 INFO] [filled] account=Account { branch_no: "20706", account: "825678", account_type: "stock", name: "莊愛真" }, date=None, date1=None
